@@ -1,0 +1,72 @@
+﻿<html>
+<head>
+<title>Fő oldal</title>
+
+<script type="text/javascript" src="/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/test.js?nev=Peter" ></script>
+
+<script type="text/javascript">
+    var selectedLabel = "";
+
+    function loadLabel(label) {
+        $.ajax({
+            type: "GET",
+            url: "/ajax/" + label + "/",
+            success: function (r) {
+                s = r.split(";");
+                $("#labels").html(s[0]);
+                $("#files").html(s[1]);
+                selectedLabel = label;
+
+                window.history.pushState(r, "", "/" + label + "/");
+            }
+        });
+    }
+
+    function getFiles() {
+        window.open("/GetFiles/" + selectedLabel);
+    }
+
+    window.addEventListener('popstate', function (event) {
+
+        s = event.state.split(";");
+        $("#labels").html(s[0]);
+        $("#files").html(s[1]);
+        
+    });
+
+</script>
+
+<style type="text/css">
+#labelContainer
+{
+    border: 1px solid black;
+}
+#fileContainer
+{
+    border: 1px solid black;
+}
+</style>
+</head>
+
+<body>
+Teszt oldal
+<div id="teszt"></div>
+<br />
+
+<a href="javascript:void(0)" onclick="getFiles()">Fájlok letöltése</a>
+
+<div id="labelContainer">
+    Címkék
+    <div id="labels"></div>
+</div>
+<br />
+<div id="fileContainer">
+    Fájlok
+    <div id="files"></div>
+</div>
+
+</body>
+
+
+</html>
