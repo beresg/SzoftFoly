@@ -23,32 +23,62 @@ namespace HFS.HttpServer
     {
         public String Name { get; set; }
         public String Label { get; set; }
-        public List<Label> Labels { get; set; }
+        public List<String> Labels { get; set; }
         public String ID { get; set; }
         public DateTime Date { get; set; }
         public Int64 Size { get; set; }
         public String Extension { get; set; }
         public String Location { get; set; }
-        
+
     }
 
     class HttpServer
     {
         public enum Encoding { None, GZip, Deflate }
 
-        public Int32 Port { get; set; }
+        public UInt16 Port
+        {
+            get
+            {
+                return port;
+            }
+
+            set
+            {
+                if (!running)
+                    port = value;
+            }
+        }
+
         public Boolean Running { get { return running; } }
         public Encoding ResponseEncoding { get; set; }
+        public String Root
+        {
+            get
+            {
+                return root;
+            }
+
+            set
+            {
+                if (Directory.Exists(value))
+                {
+                    root = value;
+                }
+            }
+        }
 
         private TcpListener tcpListener;
         private Boolean running;
         private AutoResetEvent tcpClientConnected;
+        private String root;
+        private UInt16 port;
 
         //Temporary
-        public List<Label> Labels {get;set;}
-        public List<File> Files {get;set;}
+        public List<Label> Labels { get; set; }
+        public List<File> Files { get; set; }
 
-        
+
         public HttpServer()
         {
             ResponseEncoding = HttpServer.Encoding.None;
@@ -62,7 +92,7 @@ namespace HFS.HttpServer
             {
                 tcpListener = new TcpListener(IPAddress.Parse("127.0.0.1"), Port);
                 tcpListener.Start();
-                
+
                 running = true;
 
                 while (running)
@@ -99,7 +129,7 @@ namespace HFS.HttpServer
             {
                 NetworkStream ns = client.GetStream();
                 StreamReader sr = new StreamReader(ns);
-                
+
                 String line = sr.ReadLine();
 
                 if (line != null)
@@ -151,30 +181,38 @@ namespace HFS.HttpServer
             HttpResponse response = new HttpResponse();
 
             StreamWriter sw = new StreamWriter(response.Stream);
-            
+
             switch (request.BaseUrl)
             {
                 case "/":
-                    using (StreamReader sr = new StreamReader("frame.html"))
+                    //using (StreamReader sr = new StreamReader("frame.html"))
+                    if (System.IO.File.Exists(root + "index.html"))
                     {
-                        response.Headers.Add("Content-Type", "text/html; charset=\"utf-8\"");
+                        using (StreamReader sr = new StreamReader(root + "index.html"))
+                        {
+                            response.Headers.Add("Content-Type", "text/html; charset=\"utf-8\"");
 
-                        String fileContent = sr.ReadToEnd();
-                        fileContent = fileContent.Replace("<div id=\"labels\"></div>", "<div id=\"labels\">" + LabelList("") + "</div>");
-                        fileContent = fileContent.Replace("<div id=\"files\"></div>", "<div id=\"files\">" + FileList("") + "</div>");
+                            String fileContent = sr.ReadToEnd();
+                            fileContent = fileContent.Replace("<div id=\"labels\"></div>", "<div id=\"labels\">" + LabelList("") + "</div>");
+                            fileContent = fileContent.Replace("<div id=\"files\"></div>", "<div id=\"files\">" + FileList("") + "</div>");
 
-                        sw.Write(fileContent);
+                            sw.Write(fileContent);
+                        }
                     }
+                    else
+                        response.StatusCode = 404;
+
                     break;
                 case "/GetFileList":
                     response.Headers.Add("Content-Type", "application/json; charset=utf-8");
 
-                    sw.Write(FileListToJSON());                    
+                    sw.Write(FileListToJSON());
                     break;
                 default:
-                    if (System.IO.File.Exists(request.BaseUrl.Substring(1)))
+                    String path = request.BaseUrl.Substring(1);
+                    if (System.IO.File.Exists(root + path))
                     {
-                        FileInfo fi = new FileInfo(request.BaseUrl.Substring(1));
+                        FileInfo fi = new FileInfo(root + path);
                         DateTime lastWrite = fi.LastWriteTimeUtc;
 
                         response.Headers.Add("Date", DateTime.Now.ToUniversalTime().ToString("r"));
@@ -183,16 +221,21 @@ namespace HFS.HttpServer
                         if (!request.Headers.ContainsKey("If-Modified-Since") ||
                             request.GETQuery.Count > 0 || DateTime.Parse(request.Headers["If-Modified-Since"]) < lastWrite)
                         {
-                            using (StreamReader sr = new StreamReader(request.BaseUrl.Substring(1)))
+                            using (StreamReader sr = new StreamReader(root + path))
                             {
-                                String fileContent = sr.ReadToEnd();
-
-                                foreach (KeyValuePair<String, String> kvp in request.GETQuery)
+                                if (path.EndsWith(".js"))
                                 {
-                                    fileContent = fileContent.Replace("<?=" + kvp.Key + "?>", kvp.Value);
-                                }
+                                    String fileContent = sr.ReadToEnd();
 
-                                sw.Write(fileContent);
+                                    foreach (KeyValuePair<String, String> kvp in request.GETQuery)
+                                    {
+                                        fileContent = fileContent.Replace("<?=" + kvp.Key + "?>", kvp.Value);
+                                    }
+
+                                    sw.Write(fileContent);
+                                }
+                                else
+                                    sr.BaseStream.CopyTo(sw.BaseStream);
                             }
                         }
                         else
@@ -217,7 +260,7 @@ namespace HFS.HttpServer
 
                                 response.Headers.Add("Content-Type", "application/zip; charset=utf-8");
                                 response.Headers.Add("Content-Disposition", "inline; filename=\"" + selectedLabel + ".zip\"");
-                                
+
 
                                 MemoryStream ms = new MemoryStream();
                                 {
@@ -325,7 +368,7 @@ namespace HFS.HttpServer
                 else
                 {
                     response.Stream.Flush();
-                    
+
                     if (response.Stream.Length != 0)
                     {
                         if (!response.Headers.ContainsKey("Content-Length"))
@@ -368,11 +411,11 @@ namespace HFS.HttpServer
         {
             String s = String.Empty;
 
-            if(Labels!=null)
-            foreach (Label label in Labels.Where(x => x.Parent == parentName))
-            {
-                s += "<a href=\"javascript:void(0)\" onClick=\"loadLabel('" + label.Name + "')\">" + label.Name + "</a><br />";
-            }
+            if (Labels != null)
+                foreach (Label label in Labels.Where(x => x.Parent == parentName))
+                {
+                    s += "<a href=\"javascript:void(0)\" onClick=\"loadLabel('" + label.Name + "')\">" + label.Name + "</a><br />";
+                }
 
             return s;
         }
@@ -381,11 +424,11 @@ namespace HFS.HttpServer
         {
             String s = String.Empty;
 
-            if(Files!=null)
-            foreach (File file in Files.Where(x => x.Label == labelName))
-            {
-                s += "<a href=\"/GetFile/" + file.ID + "\">" + file.Name + "</a><br />";
-            }
+            if (Files != null)
+                foreach (File file in Files.Where(x => x.Label == labelName))
+                {
+                    s += "<a href=\"/GetFile/" + file.ID + "\">" + file.Name + "</a><br />";
+                }
 
             return s;
         }
@@ -399,14 +442,14 @@ namespace HFS.HttpServer
             foreach (File file in Files)
             {
                 json.Append("{");
-                json.Append("\"id\" : \""+file.ID+"\",");
-                json.Append("\"size\" : \""+file.Size+"\",");
-                json.Append("\"label\" : \""+file.Label+"\",");
-                json.Append("\"extension\" : \""+file.Extension+"\",");
-                json.Append("\"date\" : \""+file.Date+"\",");
+                json.Append("\"id\" : \"" + file.ID + "\",");
+                json.Append("\"size\" : \"" + file.Size + "\",");
+                json.Append("\"label\" : \"" + file.Label + "\",");
+                json.Append("\"extension\" : \"" + file.Extension + "\",");
+                json.Append("\"date\" : \"" + file.Date + "\",");
                 json.Append("\"labels\" : [");
-                foreach(Label label in file.Labels)
-                    json.Append("\""+label.Name+"\",");
+                foreach (String label in file.Labels)
+                    json.Append("\"" + label + "\",");
 
                 if (json[json.Length - 1] == ',')
                     json[json.Length - 1] = ']';
