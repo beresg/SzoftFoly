@@ -113,11 +113,16 @@ namespace HFS.HttpServer
 
         public void DoAcceptTcpClientCallback(IAsyncResult ar)
         {
-            TcpListener listener = (TcpListener)ar.AsyncState;
-            tcpClientConnected.Set();
-
-            //if(listener.Server.)
+            try
+            {
+                TcpListener listener = (TcpListener)ar.AsyncState;
+                tcpClientConnected.Set();
+                
                 Process(listener.EndAcceptTcpClient(ar));
+            }
+            catch
+            {
+            }
         }
 
         private void Process(object obj)
@@ -160,6 +165,13 @@ namespace HFS.HttpServer
                         HttpResponse response = ProcessRequest(request);
 
                         SendResponse(ns, response, request.AcceptEncoding);
+                    }
+                    else
+                    {
+                        HttpResponse response = new HttpResponse();
+                        response.StatusCode = 400;
+
+                        SendResponse(ns, response, new List<String>());
                     }
                 }
                 else
@@ -257,27 +269,33 @@ namespace HFS.HttpServer
                             {
                                 String selectedLabel = request.BaseUrl.Substring(10, request.BaseUrl.Length - 10);
 
-                                response.Headers.Add("Content-Type", "application/zip; charset=utf-8");
-                                response.Headers.Add("Content-Disposition", "inline; filename=\"" + selectedLabel + ".zip\"");
-
-
-                                MemoryStream ms = new MemoryStream();
+                                if (Files.Count(x => x.Labels.Contains(selectedLabel))>0)
                                 {
-                                    CompressionInfo ci = new CompressionInfo();
-                                    ci.DeflateCompressionLevel = SharpCompress.Compressor.Deflate.CompressionLevel.Default;
-                                    ci.Type = CompressionType.Deflate;
 
-                                    using (ZipWriter zw = new ZipWriter(ms, ci, ""))
+                                    response.Headers.Add("Content-Type", "application/zip; charset=utf-8");
+                                    response.Headers.Add("Content-Disposition", "inline; filename=\"" + selectedLabel + ".zip\"");
+
+
+                                    MemoryStream ms = new MemoryStream();
                                     {
-                                        foreach (File file in Files.Where(x => x.Labels.Contains(selectedLabel)))
-                                        {
-                                            zw.Write(file.FileName, new FileStream(file.Path, FileMode.Open, FileAccess.Read), null);
-                                        }
-                                    }
+                                        CompressionInfo ci = new CompressionInfo();
+                                        ci.DeflateCompressionLevel = SharpCompress.Compressor.Deflate.CompressionLevel.Default;
+                                        ci.Type = CompressionType.Deflate;
 
-                                    ms.Seek(0, SeekOrigin.Begin);
-                                    response.Stream = ms;
+                                        using (ZipWriter zw = new ZipWriter(ms, ci, ""))
+                                        {
+                                            foreach (File file in Files.Where(x => x.Labels.Contains(selectedLabel)))
+                                            {
+                                                zw.Write(file.FileName, new FileStream(file.Path, FileMode.Open, FileAccess.Read), null);
+                                            }
+                                        }
+
+                                        ms.Seek(0, SeekOrigin.Begin);
+                                        response.Stream = ms;
+                                    }
                                 }
+                                else
+                                    response.StatusCode = 404;
                             }
                             else
                                 if (request.BaseUrl.StartsWith("/GetFile/"))
@@ -321,6 +339,13 @@ namespace HFS.HttpServer
         private void SendResponse(NetworkStream ns, HttpResponse response, List<String> acceptEncoding)
         {
             StreamWriter sw = new StreamWriter(ns);
+
+            if (response.StatusCode == 404 && response.Stream.Length == 0)
+            {
+                StreamWriter sw2 = new StreamWriter(response.Stream);
+                sw2.Write("<h1>404 Not Found</h1>");
+                sw2.Flush();
+            }
 
             sw.WriteLine("HTTP/" + response.Version + " " + response.StatusCode + " " + StatusCodeToMessage(response.StatusCode));
 
