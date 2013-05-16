@@ -2,6 +2,7 @@
 
     var fileServer = "/GetFileList";
     var fileRepo = "/GetFile";
+    var filesRepo = "/GetFiles";
     
     $("#header").click(function(){
         currTagCombination = { type: "AND", elems: [] };
@@ -85,6 +86,8 @@
                         currTagCombination = { type: "AND", elems: [label] };
                         refreshFiles();
                         refreshCTC();
+                    }).dblclick(function() {
+                        window.location.href = filesRepo + "/" + label;
                     }).draggable({
                         containment: "body",
                         revert: true,
