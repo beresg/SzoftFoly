@@ -1,4 +1,7 @@
 ﻿$(function() {
+
+    var fileServer = "samples/sample-response.txt";
+
     $( ".tag_collection *" ).draggable({
         containment: "body",
         revert: true
@@ -16,11 +19,27 @@
         tolerance: "pointer"
     });
     
-    files = [ 
-        { name: "Track1.mp3", link: "Track1.mp3", size: 4*1024*1024, tags: [ "Zene", "Rock" ] },
-        { name: "Track2.mp3", link: "Track2.mp3", size: 6*1024*1024,  tags: [ "Zene" ] },
-        { name: "Rock.jpg", link: "Rock.jpg", size: 6*1024*1024, tags: [ "Képek", "Rock" ] }
-    ];
+    function runDaemon() {
+        $.ajax({
+          dataType: "json",
+          url: fileServer,
+          success: function(data) {
+            if( files != data ) {
+                alert("server content changed");
+            }
+            files = data;
+            refreshFiles();
+            setTimeout(runDaemon,3000);
+          },
+          error: function(a,b,c) {
+            $( "#connect-dialog-form" ).dialog("open");
+          },
+        });
+    }
+    
+    runDaemon();
+    
+    files = [];
     
     topTags = [];
     
@@ -37,11 +56,11 @@
         } else {
             currTagCombination = {type:type, elems:[currTagCombination, tag]};
         }
-        refrehFiles();
+        refreshFiles();
         refreshCTC();
     }
     
-    function refrehFiles() {
+    function refreshFiles() {
         var matchingFiles = [];
         $.each(files, function(i,file){
             if(evalTagMatching(currTagCombination,file)) {
@@ -106,7 +125,20 @@
             }
         }
     }
-    
-    refrehFiles();
+        
+    $( "#connect-dialog-form" ).dialog({
+      autoOpen: false,
+      width: 350,
+      modal: true,
+      buttons: {
+        "Connect": function() {
+          fileServer = $("#url").val();
+          $(this).dialog("close");
+        }
+      },
+      close: function() {
+        setTimeout(runDaemon,3000);
+      }
+    });
     
 });
