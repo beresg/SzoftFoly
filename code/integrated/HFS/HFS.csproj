@@ -35,7 +35,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="SharpCompress">
-      <HintPath>Resources\SharpCompress.dll</HintPath>
+      <HintPath>.\SharpCompress.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

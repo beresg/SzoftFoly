@@ -7,3 +7,13 @@ C:\Users\Akos Belakovics\Documents\SzoftFoly\code\integrated\HFS\obj\x86\Debug\H
 C:\Users\Akos Belakovics\Documents\SzoftFoly\code\integrated\HFS\obj\x86\Debug\HFS.pdb
 C:\Users\Akos Belakovics\Documents\SzoftFoly\code\integrated\HFS\obj\x86\Debug\HFS.csprojResolveAssemblyReference.cache
 C:\Users\Akos Belakovics\Documents\SzoftFoly\code\integrated\HFS\bin\Debug\SharpCompress.dll
+D:\ELTE\backup\2013tavasz\szoftverfolyamat2\SzoftFoly\code\integrated\HFS\obj\x86\Debug\ResolveAssemblyReference.cache
+D:\ELTE\backup\2013tavasz\szoftverfolyamat2\SzoftFoly\code\integrated\HFS\obj\x86\Debug\HFS.MainWindow.resources
+D:\ELTE\backup\2013tavasz\szoftverfolyamat2\SzoftFoly\code\integrated\HFS\obj\x86\Debug\HFS.Properties.Resources.resources
+D:\ELTE\backup\2013tavasz\szoftverfolyamat2\SzoftFoly\code\integrated\HFS\obj\x86\Debug\GenerateResource.read.1.tlog
+D:\ELTE\backup\2013tavasz\szoftverfolyamat2\SzoftFoly\code\integrated\HFS\obj\x86\Debug\GenerateResource.write.1.tlog
+D:\ELTE\backup\2013tavasz\szoftverfolyamat2\SzoftFoly\code\integrated\HFS\bin\Debug\HFS.exe
+D:\ELTE\backup\2013tavasz\szoftverfolyamat2\SzoftFoly\code\integrated\HFS\bin\Debug\HFS.pdb
+D:\ELTE\backup\2013tavasz\szoftverfolyamat2\SzoftFoly\code\integrated\HFS\bin\Debug\SharpCompress.dll
+D:\ELTE\backup\2013tavasz\szoftverfolyamat2\SzoftFoly\code\integrated\HFS\obj\x86\Debug\HFS.exe
+D:\ELTE\backup\2013tavasz\szoftverfolyamat2\SzoftFoly\code\integrated\HFS\obj\x86\Debug\HFS.pdb

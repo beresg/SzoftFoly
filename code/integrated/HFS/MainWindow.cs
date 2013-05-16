@@ -29,7 +29,7 @@ namespace HFS
             server.Files = files;
 
             server.ResponseEncoding = HttpServer.HttpServer.Encoding.None;
-            server.Root = "";
+            server.Root = "static/";
 
             thread = new Thread(server.Start);
             thread.Start();
