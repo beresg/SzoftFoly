@@ -12,13 +12,17 @@
     
     $( "#tag_and" ).droppable({
         accept: ".tag_collection *",
-        drop: function(event, ui){ addToCtc("AND",ui.draggable[0].innerText); },
+        drop: function(event, ui){ 
+          addToCtc("AND",ui.draggable[0].innerText); 
+        },
         tolerance: "pointer"
     });    
     
     $( "#tag_or" ).droppable({
         accept: ".tag_collection *",
-        drop: function(event, ui){ addToCtc("OR",ui.draggable[0].innerText); },
+        drop: function(event, ui){ 
+          addToCtc("OR",ui.draggable[0].innerText); 
+        },
         tolerance: "pointer"
     });
     
@@ -82,12 +86,13 @@
                 if($.inArray(label, tags) == (-1)) {
                     tags.push(label);
                     var appended = $("<li class='tag'>" + label + "</li>");
-                    appended.click(function() {
+                    appended.dblclick(function(e) {
                         currTagCombination = { type: "AND", elems: [label] };
                         refreshFiles();
                         refreshCTC();
-                    }).dblclick(function() {
-                        window.location.href = filesRepo + "/" + label;
+                        if(e.shiftKey) {
+                            window.location.href = filesRepo + "/" + label;
+                        }
                     }).draggable({
                         containment: "body",
                         revert: true,
