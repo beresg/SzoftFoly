@@ -18,10 +18,13 @@ namespace HFS
         private HttpServer.HttpServer server;
         private LinkedList<String> LAST_PATH_LIST = new LinkedList<string>();
         private Thread thread;
+        private Int32 idCounter;
 
         public MainWindow()
         {
             InitializeComponent();
+
+            idCounter = 0;
 
             server = new HttpServer.HttpServer();
             
@@ -104,16 +107,26 @@ namespace HFS
                 {
                     destinationNode.Nodes.Add(sourceNode.Text, sourceNode.Text, 3, 3);
                     destinationNode.Expand();
-                    IEnumerable<HFS.HttpServer.File> file = server.Files.Where(x => x.Path == sourceNode.Tag.ToString() + Path.DirectorySeparatorChar + sourceNode.Text);
+
+                    String filepath = sourceNode.Tag.ToString() + Path.DirectorySeparatorChar + sourceNode.Text;
+
+                    IEnumerable<HFS.HttpServer.File> file = server.Files.Where(x => x.Path== filepath);
 
                     if (file.Count() == 0)
                     {
+                        FileInfo fi = new FileInfo(filepath);
+
                         server.Files.Add(new HttpServer.File()
                         {
+                            ID = idCounter.ToString(),
                             FileName = sourceNode.Text,
                             Labels = new List<string>() { destinationNode.Text },
-                            Path = sourceNode.Tag.ToString() + Path.DirectorySeparatorChar + sourceNode.Text,
+                            Path = filepath,
+                            Size = fi.Length,
+                            Date = fi.LastWriteTime
                         });
+
+                        idCounter++;
                     }
                     else
                         file.First().Labels.Add(destinationNode.Text);

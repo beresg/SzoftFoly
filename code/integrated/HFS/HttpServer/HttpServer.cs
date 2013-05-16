@@ -453,6 +453,7 @@ namespace HFS.HttpServer
                 json.Append("{");
                 json.Append("\"id\" : \"" + file.ID + "\",");
                 json.Append("\"size\" : \"" + file.Size + "\",");
+                json.Append("\"name\" : \"" + Path.GetFileName(file.Path) + "\",");
                 //json.Append("\"label\" : \"" + file.Label + "\",");
                 //json.Append("\"extension\" : \"" + file.Extension + "\",");
                 json.Append("\"date\" : \"" + file.Date + "\",");
