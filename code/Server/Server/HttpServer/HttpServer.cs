@@ -13,23 +13,20 @@ using SharpCompress.Common;
 
 namespace HFS.HttpServer
 {
-    public class Label
+    /*public class Label
     {
         public String Name { get; set; }
         public String Parent { get; set; }
-    }
+    }*/
 
     public class File
     {
-        public String Name { get; set; }
-        public String Label { get; set; }
-        public List<String> Labels { get; set; }
         public String ID { get; set; }
+        public String FileName { get; set; }
+        public String Path { get; set; }
+        public List<String> Labels { get; set; }
         public DateTime Date { get; set; }
         public Int64 Size { get; set; }
-        public String Extension { get; set; }
-        public String Location { get; set; }
-
     }
 
     class HttpServer
@@ -75,7 +72,7 @@ namespace HFS.HttpServer
         private UInt16 port;
 
         //Temporary
-        public List<Label> Labels { get; set; }
+        //public List<Label> Labels { get; set; }
         public List<File> Files { get; set; }
 
 
@@ -118,7 +115,9 @@ namespace HFS.HttpServer
         {
             TcpListener listener = (TcpListener)ar.AsyncState;
             tcpClientConnected.Set();
-            Process(listener.EndAcceptTcpClient(ar));
+
+            //if(listener.Server.)
+                Process(listener.EndAcceptTcpClient(ar));
         }
 
         private void Process(object obj)
@@ -270,9 +269,9 @@ namespace HFS.HttpServer
 
                                     using (ZipWriter zw = new ZipWriter(ms, ci, ""))
                                     {
-                                        foreach (File file in Files.Where(x => x.Label == selectedLabel))
+                                        foreach (File file in Files.Where(x => x.Labels.Contains(selectedLabel)))
                                         {
-                                            zw.Write(file.Name, new FileStream(file.Location, FileMode.Open, FileAccess.Read), null);
+                                            zw.Write(file.FileName, new FileStream(file.Path, FileMode.Open, FileAccess.Read), null);
                                         }
                                     }
 
@@ -286,11 +285,11 @@ namespace HFS.HttpServer
                                     String id = request.BaseUrl.Substring(9, request.BaseUrl.Length - 9);
                                     File file = Files.Where(x => x.ID == id).FirstOrDefault();
 
-                                    if (file != default(File) && System.IO.File.Exists(file.Location))
+                                    if (file != default(File) && System.IO.File.Exists(file.Path))
                                     {
                                         //response.Headers.Add("Content-Type", mime_type+"; charset=utf-8");
-                                        response.Headers.Add("Content-Disposition", "inline; filename=\"" + file.Name + "\"");
-                                        response.Stream = System.IO.File.OpenRead(file.Location);
+                                        response.Headers.Add("Content-Disposition", "inline; filename=\"" + file.FileName + "\"");
+                                        response.Stream = System.IO.File.OpenRead(file.Path);
                                     }
                                     else
                                         response.StatusCode = 404;
@@ -410,11 +409,16 @@ namespace HFS.HttpServer
         private String LabelList(String parentName)
         {
             String s = String.Empty;
+            List<String> labels = new List<string>();
 
-            if (Labels != null)
-                foreach (Label label in Labels.Where(x => x.Parent == parentName))
+            if (Files != null)
+                foreach (List<String> label in Files.Select(x => x.Labels))
+                    labels = labels.Union(label).ToList();
+
+            foreach(String label in labels)
                 {
-                    s += "<a href=\"javascript:void(0)\" onClick=\"loadLabel('" + label.Name + "')\">" + label.Name + "</a><br />";
+                    
+                    s += "<a href=\"javascript:void(0)\" onClick=\"loadLabel('" + label + "')\">" + label + "</a><br />";
                 }
 
             return s;
@@ -425,9 +429,9 @@ namespace HFS.HttpServer
             String s = String.Empty;
 
             if (Files != null)
-                foreach (File file in Files.Where(x => x.Label == labelName))
+                foreach (File file in Files.Where(x => x.Labels.Contains(labelName)))
                 {
-                    s += "<a href=\"/GetFile/" + file.ID + "\">" + file.Name + "</a><br />";
+                    s += "<a href=\"/GetFile/" + file.ID + "\">" + file.FileName + "</a><br />";
                 }
 
             return s;
@@ -444,8 +448,8 @@ namespace HFS.HttpServer
                 json.Append("{");
                 json.Append("\"id\" : \"" + file.ID + "\",");
                 json.Append("\"size\" : \"" + file.Size + "\",");
-                json.Append("\"label\" : \"" + file.Label + "\",");
-                json.Append("\"extension\" : \"" + file.Extension + "\",");
+                //json.Append("\"label\" : \"" + file.Label + "\",");
+                //json.Append("\"extension\" : \"" + file.Extension + "\",");
                 json.Append("\"date\" : \"" + file.Date + "\",");
                 json.Append("\"labels\" : [");
                 foreach (String label in file.Labels)
