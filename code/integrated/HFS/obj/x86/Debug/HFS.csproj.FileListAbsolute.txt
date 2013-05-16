@@ -5,4 +5,5 @@ C:\Users\Akos Belakovics\Documents\SzoftFoly\code\integrated\HFS\obj\x86\Debug\H
 C:\Users\Akos Belakovics\Documents\SzoftFoly\code\integrated\HFS\obj\x86\Debug\HFS.csproj.GenerateResource.Cache
 C:\Users\Akos Belakovics\Documents\SzoftFoly\code\integrated\HFS\obj\x86\Debug\HFS.exe
 C:\Users\Akos Belakovics\Documents\SzoftFoly\code\integrated\HFS\obj\x86\Debug\HFS.pdb
-C:\Users\Akos Belakovics\Documents\SzoftFoly\code\integrated\HFS\obj\x86\Debug\HFS.TagListItem.resources
+C:\Users\Akos Belakovics\Documents\SzoftFoly\code\integrated\HFS\obj\x86\Debug\HFS.csprojResolveAssemblyReference.cache
+C:\Users\Akos Belakovics\Documents\SzoftFoly\code\integrated\HFS\bin\Debug\SharpCompress.dll

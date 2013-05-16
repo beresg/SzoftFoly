@@ -1,0 +1,9 @@
+C:\Users\Akos Belakovics\Documents\SzoftFoly\code\Server\Server\bin\Debug\HFS.exe
+C:\Users\Akos Belakovics\Documents\SzoftFoly\code\Server\Server\bin\Debug\HFS.pdb
+C:\Users\Akos Belakovics\Documents\SzoftFoly\code\Server\Server\bin\Debug\SharpCompress.dll
+C:\Users\Akos Belakovics\Documents\SzoftFoly\code\Server\Server\obj\x86\Debug\Server.csprojResolveAssemblyReference.cache
+C:\Users\Akos Belakovics\Documents\SzoftFoly\code\Server\Server\obj\x86\Debug\HFS.Form1.resources
+C:\Users\Akos Belakovics\Documents\SzoftFoly\code\Server\Server\obj\x86\Debug\HFS.Properties.Resources.resources
+C:\Users\Akos Belakovics\Documents\SzoftFoly\code\Server\Server\obj\x86\Debug\Server.csproj.GenerateResource.Cache
+C:\Users\Akos Belakovics\Documents\SzoftFoly\code\Server\Server\obj\x86\Debug\HFS.exe
+C:\Users\Akos Belakovics\Documents\SzoftFoly\code\Server\Server\obj\x86\Debug\HFS.pdb
