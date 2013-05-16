@@ -1,7 +1,12 @@
 ﻿$(function() {
-    $( ".tag_collection *" ).draggable({
-        containment: "body",
-        revert: true
+
+    var fileServer = "/GetFileList";
+    var fileRepo = "/GetFile";
+    
+    $("#header").click(function(){
+        currTagCombination = { type: "AND", elems: [] };
+        refreshFiles();
+        refreshCTC();
     });
     
     $( "#tag_and" ).droppable({
@@ -16,13 +21,27 @@
         tolerance: "pointer"
     });
     
-    files = [ 
-        { name: "Track1.mp3", link: "Track1.mp3", size: 4*1024*1024, tags: [ "Zene", "Rock" ] },
-        { name: "Track2.mp3", link: "Track2.mp3", size: 6*1024*1024,  tags: [ "Zene" ] },
-        { name: "Rock.jpg", link: "Rock.jpg", size: 6*1024*1024, tags: [ "Képek", "Rock" ] }
-    ];
+    function runDaemon() {
+        $.ajax({
+          dataType: "json",
+          url: fileServer,
+          success: function(data) {
+            files = data.items;
+            refreshFiles();
+            refreshTags();
+            setTimeout(runDaemon,3000);
+          },
+          error: function(a,b,c) {
+            $( "#connect-dialog-form" ).dialog("open");
+          },
+        });
+    }
     
-    topTags = [];
+    runDaemon();
+    
+    files = [];
+    
+    tags = [];
     
     function addToCtc(type,tag) {
         if (currTagCombination.elems.length == 0) {
@@ -37,11 +56,11 @@
         } else {
             currTagCombination = {type:type, elems:[currTagCombination, tag]};
         }
-        refrehFiles();
+        refreshFiles();
         refreshCTC();
     }
     
-    function refrehFiles() {
+    function refreshFiles() {
         var matchingFiles = [];
         $.each(files, function(i,file){
             if(evalTagMatching(currTagCombination,file)) {
@@ -51,16 +70,37 @@
         $( "#file_list tbody" ).empty();
         $.each(matchingFiles, function() {
             $( "#file_list tbody" ).append( 
-               "<tr><td>" + this.name + "</td>" 
+               "<tr><td><a target='_blank' href='"+ fileRepo + "/" + this.id +"'>" + this.name + "</a></td>" 
                + "<td>" + sizeToText(this.size) + "</td></tr>" );
+        });
+    }
+    
+    function refreshTags() {
+        $.each(files, function(i,file) {
+            $.each(file.labels, function(j,label){
+                if($.inArray(label, tags) == (-1)) {
+                    tags.push(label);
+                    var appended = $("<li class='tag'>" + label + "</li>");
+                    appended.click(function() {
+                        currTagCombination = { type: "AND", elems: [label] };
+                        refreshFiles();
+                        refreshCTC();
+                    }).draggable({
+                        containment: "body",
+                        revert: true,
+                        delay: 100,
+                    });
+                    $( "#all_time_top_tags" ).append(appended);
+                }
+            });
         });
     }
     
     function sizeToText(size) {
         if(size <= 1024) return size + " B";
-        if(size <= 1024*1024) return size/1024 + " KB";
-        if(size <= 1024*1024*1024) return size/1024/1024 + " MB";
-        return size/1024/1024/1024 + " GB" ;
+        if(size <= 1024*1024) return (size/1024).toFixed(2) + " KB";
+        if(size <= 1024*1024*1024) return (size/1024/1024).toFixed(2) + " MB";
+        return (size/1024/1024/1024).toFixed(2) + " GB" ;
     }
     
     function refreshCTC() {
@@ -72,8 +112,8 @@
         if($.type(ctc) == "string") return "<li class='elem'><a href='#'>" + ctc + "</a></li>";
         else {
             if(ctc.elems.length == 0)
-                if(ctc.type == "AND") return "ALL";
-                else return "NONE";
+                if(ctc.type == "AND") return "<li class='elem'><a href='#'>ALL</a></li>";
+                else return "<li class='elem'><a href='#'>NONE</a></li>";
             else return ctc.elems.map(getCTCHeader).join(" <li class='elem'>"+ctc.type+"</li> ");
         }
     }
@@ -84,8 +124,8 @@
     
     function evalTagMatching(ctc,file) {
         if($.type(ctc) == "string") {
-            for( var i = 0; i < file.tags.length; i++ ) {
-                if (ctc == file.tags[i])
+            for( var i = 0; i < file.labels.length; i++ ) {
+                if (ctc == file.labels[i])
                     return true;
             }
             return false;
@@ -106,7 +146,20 @@
             }
         }
     }
-    
-    refrehFiles();
+            
+    $( "#connect-dialog-form" ).dialog({
+      autoOpen: false,
+      width: 350,
+      modal: true,
+      buttons: {
+        "Connect": function() {
+          fileServer = $("#url").val();
+          $(this).dialog("close");
+        }
+      },
+      close: function() {
+        setTimeout(runDaemon,3000);
+      }
+    });
     
 });

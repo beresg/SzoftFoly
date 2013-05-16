@@ -159,6 +159,10 @@ a:hover {
     color: #CC0000; 
 }
 
+#right .ui-draggable:hover {
+    color: #ffffff;
+}
+
 /* ------------ Horizontal Menu Styling --------------- */
 
 

@@ -17,3 +17,13 @@ D:\ELTE\backup\2013tavasz\szoftverfolyamat2\SzoftFoly\code\integrated\HFS\bin\De
 D:\ELTE\backup\2013tavasz\szoftverfolyamat2\SzoftFoly\code\integrated\HFS\bin\Debug\SharpCompress.dll
 D:\ELTE\backup\2013tavasz\szoftverfolyamat2\SzoftFoly\code\integrated\HFS\obj\x86\Debug\HFS.exe
 D:\ELTE\backup\2013tavasz\szoftverfolyamat2\SzoftFoly\code\integrated\HFS\obj\x86\Debug\HFS.pdb
+C:\Users\lazac\Desktop\dolgok\egyetem\aktualis_kurzusok\szoftverfolyamat-tervezese-es-kivitelezese\SzoftFoly\code\integrated\HFS\bin\Debug\HFS.exe
+C:\Users\lazac\Desktop\dolgok\egyetem\aktualis_kurzusok\szoftverfolyamat-tervezese-es-kivitelezese\SzoftFoly\code\integrated\HFS\bin\Debug\HFS.pdb
+C:\Users\lazac\Desktop\dolgok\egyetem\aktualis_kurzusok\szoftverfolyamat-tervezese-es-kivitelezese\SzoftFoly\code\integrated\HFS\bin\Debug\SharpCompress.dll
+C:\Users\lazac\Desktop\dolgok\egyetem\aktualis_kurzusok\szoftverfolyamat-tervezese-es-kivitelezese\SzoftFoly\code\integrated\HFS\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\lazac\Desktop\dolgok\egyetem\aktualis_kurzusok\szoftverfolyamat-tervezese-es-kivitelezese\SzoftFoly\code\integrated\HFS\obj\x86\Debug\HFS.MainWindow.resources
+C:\Users\lazac\Desktop\dolgok\egyetem\aktualis_kurzusok\szoftverfolyamat-tervezese-es-kivitelezese\SzoftFoly\code\integrated\HFS\obj\x86\Debug\HFS.Properties.Resources.resources
+C:\Users\lazac\Desktop\dolgok\egyetem\aktualis_kurzusok\szoftverfolyamat-tervezese-es-kivitelezese\SzoftFoly\code\integrated\HFS\obj\x86\Debug\GenerateResource.read.1.tlog
+C:\Users\lazac\Desktop\dolgok\egyetem\aktualis_kurzusok\szoftverfolyamat-tervezese-es-kivitelezese\SzoftFoly\code\integrated\HFS\obj\x86\Debug\GenerateResource.write.1.tlog
+C:\Users\lazac\Desktop\dolgok\egyetem\aktualis_kurzusok\szoftverfolyamat-tervezese-es-kivitelezese\SzoftFoly\code\integrated\HFS\obj\x86\Debug\HFS.exe
+C:\Users\lazac\Desktop\dolgok\egyetem\aktualis_kurzusok\szoftverfolyamat-tervezese-es-kivitelezese\SzoftFoly\code\integrated\HFS\obj\x86\Debug\HFS.pdb

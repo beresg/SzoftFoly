@@ -1,6 +1,6 @@
 ﻿$(function() {
 
-    var fileServer = "samples/sample-response.txt";
+    var fileServer = "/GetFileList";
 
     $( ".tag_collection *" ).draggable({
         containment: "body",
@@ -27,7 +27,7 @@
             if( files != data ) {
                 alert("server content changed");
             }
-            files = data;
+            files = data.items;
             refreshFiles();
             setTimeout(runDaemon,3000);
           },

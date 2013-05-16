@@ -1,0 +1,5 @@
+[ 
+    { name: "Track1.mp3", link: "Track1.mp3", size: 4*1024*1024, tags: [ "Zene", "Rock" ] },
+    { name: "Track2.mp3", link: "Track2.mp3", size: 6*1024*1024,  tags: [ "Zene" ] },
+    { name: "Rock.jpg", link: "Rock.jpg", size: 6*1024*1024, tags: [ "Képek", "Rock" ] }
+]
