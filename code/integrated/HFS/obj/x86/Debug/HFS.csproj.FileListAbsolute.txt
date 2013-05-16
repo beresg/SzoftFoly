@@ -1,0 +1,8 @@
+C:\Users\Akos Belakovics\Documents\SzoftFoly\code\integrated\HFS\bin\Debug\HFS.exe
+C:\Users\Akos Belakovics\Documents\SzoftFoly\code\integrated\HFS\bin\Debug\HFS.pdb
+C:\Users\Akos Belakovics\Documents\SzoftFoly\code\integrated\HFS\obj\x86\Debug\HFS.MainWindow.resources
+C:\Users\Akos Belakovics\Documents\SzoftFoly\code\integrated\HFS\obj\x86\Debug\HFS.Properties.Resources.resources
+C:\Users\Akos Belakovics\Documents\SzoftFoly\code\integrated\HFS\obj\x86\Debug\HFS.csproj.GenerateResource.Cache
+C:\Users\Akos Belakovics\Documents\SzoftFoly\code\integrated\HFS\obj\x86\Debug\HFS.exe
+C:\Users\Akos Belakovics\Documents\SzoftFoly\code\integrated\HFS\obj\x86\Debug\HFS.pdb
+C:\Users\Akos Belakovics\Documents\SzoftFoly\code\integrated\HFS\obj\x86\Debug\HFS.TagListItem.resources
