@@ -21,6 +21,7 @@ namespace HFS
         HttpServer.HttpServer server;
 
         String path = @"c:\";
+        Int32 idCounter = 10;
 
         public Form1()
         {
@@ -55,8 +56,8 @@ namespace HFS
             server.Files = files;
             //server.Labels = labels;
             server.ResponseEncoding = HttpServer.HttpServer.Encoding.None;
-            //server.Root = @"static\";
-            server.Root = "";
+            server.Root = @"static\";
+            //server.Root = "";
 
             Thread thread = new Thread(server.Start);
             thread.Start();
@@ -71,7 +72,8 @@ namespace HFS
 
         void listView1_ItemDrag(object sender, ItemDragEventArgs e)
         {
-            DoDragDrop(e.Item, DragDropEffects.Move);
+            if(((ListViewItem)e.Item).SubItems[1].Text=="File")
+                DoDragDrop(e.Item, DragDropEffects.Move);
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -110,10 +112,14 @@ namespace HFS
                     {
                         server.Files.Add(new HttpServer.File()
                         {
+                            ID = idCounter.ToString(),
                             FileName = lvi.Text,
                             Labels = new List<string>() { DestinationNode.Text },
-                            Path = path + Path.DirectorySeparatorChar + lvi.Text,
+                            Path = path + Path.DirectorySeparatorChar + lvi.Text
+                            
                         });
+
+                        idCounter++;
                     }
                     else
                     {
@@ -167,6 +173,7 @@ namespace HFS
             if (listView1.SelectedItems.Count>0 && listView1.SelectedItems[0].SubItems[1].Text == "Directory")
             {
                 path = path + Path.DirectorySeparatorChar + listView1.SelectedItems[0].Text;
+                textBox2.Text = path;
                 LoadFiles();
             }
         }
@@ -175,17 +182,61 @@ namespace HFS
         {
             if (treeView1.SelectedNode != null)
             {
-                List<HFS.HttpServer.File> files = server.Files.Where(x => x.Labels.Contains(treeView1.SelectedNode.Text)).ToList();
+                TreeNode selectedNode = treeView1.SelectedNode;
 
-                for(Int32 i = 0; i < files.Count; ++i)
+                switch (selectedNode.Level)
                 {
-                    files[i].Labels.Remove(treeView1.SelectedNode.Text);
+                    case 0:
+                        List<HFS.HttpServer.File> files = server.Files.Where(x => x.Labels.Contains(selectedNode.Text)).ToList();
 
-                    if (files[i].Labels.Count == 0)
-                        server.Files.Remove(files[i]);
+                        for (Int32 i = 0; i < files.Count; ++i)
+                        {
+                            files[i].Labels.Remove(selectedNode.Text);
+
+                            if (files[i].Labels.Count == 0)
+                                server.Files.Remove(files[i]);
+                        }
+
+                        break;
+                    case 1:                        
+                        String fileName = selectedNode.Text;
+                        String labelName = selectedNode.Parent.Text;
+
+                        files = server.Files.Where(x => x.FileName == fileName && x.Labels.Contains(labelName)).ToList();
+
+                        if (files.Count == 1)
+                        {
+                            if (files[0].Labels.Count == 1)
+                                server.Files.Remove(files[0]);
+                            else
+                                files[0].Labels.Remove(labelName);
+
+                        }
+
+
+                        break;
                 }
 
-                treeView1.Nodes.Remove(treeView1.SelectedNode);
+                treeView1.Nodes.Remove(selectedNode);
+
+            }
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            path = textBox2.Text;
+            LoadFiles();
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            DirectoryInfo di = Directory.GetParent(path);
+
+            if (di != null)
+            {
+                path = di.FullName;
+                textBox2.Text = path;
+                LoadFiles();
             }
         }
     }
