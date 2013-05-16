@@ -31,13 +31,14 @@ namespace HFS
             server.Port = 8888;
             server.Files = files;
 
-            server.ResponseEncoding = HttpServer.HttpServer.Encoding.None;
+            server.ResponseEncoding = HttpServer.HttpServer.Encoding.GZip;
             server.Root = "static/";
 
             thread = new Thread(server.Start);
             thread.Start();
 
             LoadFiles(CURRENT_PATH);
+            tbPath.Text = CURRENT_PATH;
         }
 
         private void LoadFiles(String path)
@@ -164,17 +165,43 @@ namespace HFS
         {
             if (tvRemote.SelectedNode != null)
             {
-                List<HFS.HttpServer.File> files = server.Files.Where(x => x.Labels.Contains(tvRemote.SelectedNode.Text)).ToList();
+                TreeNode selectedNode = tvRemote.SelectedNode;
 
-                for (Int32 i = 0; i < files.Count; ++i)
+                switch (selectedNode.Level)
                 {
-                    files[i].Labels.Remove(tvRemote.SelectedNode.Text);
+                    case 0:
+                        List<HFS.HttpServer.File> files = server.Files.Where(x => x.Labels.Contains(selectedNode.Text)).ToList();
 
-                    if (files[i].Labels.Count == 0)
-                        server.Files.Remove(files[i]);
+                        for (Int32 i = 0; i < files.Count; ++i)
+                        {
+                            files[i].Labels.Remove(selectedNode.Text);
+
+                            if (files[i].Labels.Count == 0)
+                                server.Files.Remove(files[i]);
+                        }
+
+                        break;
+                    case 1:
+                        String fileName = selectedNode.Text;
+                        String labelName = selectedNode.Parent.Text;
+
+                        files = server.Files.Where(x => x.FileName == fileName && x.Labels.Contains(labelName)).ToList();
+
+                        if (files.Count == 1)
+                        {
+                            if (files[0].Labels.Count == 1)
+                                server.Files.Remove(files[0]);
+                            else
+                                files[0].Labels.Remove(labelName);
+
+                        }
+
+
+                        break;
                 }
 
-                tvRemote.Nodes.Remove(tvRemote.SelectedNode);
+                tvRemote.Nodes.Remove(selectedNode);
+
             }
 
             btRemove.Enabled = false;
@@ -221,13 +248,35 @@ namespace HFS
                 String path = e.Node.Tag.ToString();
                 LAST_PATH_LIST.AddLast(CURRENT_PATH);
                 LoadFiles(path + Path.DirectorySeparatorChar + e.Node.Text);
+                tbPath.Text = path + Path.DirectorySeparatorChar + e.Node.Text;
             }
             else if (LAST_PATH_LIST.Count > 0)
             {
                 String path= LAST_PATH_LIST.Last.Value;
                 LAST_PATH_LIST.RemoveLast();
                 LoadFiles(path);
+                tbPath.Text = path;
             }
+        }
+
+        private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SettingsWindow sw = new SettingsWindow(server.Port);
+            if (sw.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                if (!server.Running)
+                {
+                    server.Port = sw.Port;
+                }
+                else
+                    MessageBox.Show("Szerver futása közben nem lehet portot állítani!");
+            }
+        }
+
+        private void btGo_Click(object sender, EventArgs e)
+        {
+            String path = tbPath.Text;
+            LoadFiles(path);
         }
     }
 }

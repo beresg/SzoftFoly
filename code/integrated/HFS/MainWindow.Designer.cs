@@ -33,6 +33,8 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.btRemove = new System.Windows.Forms.Button();
             this.tvRemote = new System.Windows.Forms.TreeView();
@@ -48,6 +50,8 @@
             this.startServerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.stopServerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.epTag = new System.Windows.Forms.ErrorProvider(this.components);
+            this.tbPath = new System.Windows.Forms.TextBox();
+            this.btGo = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -60,7 +64,8 @@
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fileToolStripMenuItem});
+            this.fileToolStripMenuItem,
+            this.toolsToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(582, 24);
@@ -82,11 +87,26 @@
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
+            // toolsToolStripMenuItem
+            // 
+            this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.settingsToolStripMenuItem});
+            this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
+            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
+            this.toolsToolStripMenuItem.Text = "Tools";
+            // 
+            // settingsToolStripMenuItem
+            // 
+            this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
+            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
+            this.settingsToolStripMenuItem.Text = "Settings";
+            this.settingsToolStripMenuItem.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
+            // 
             // splitContainer1
             // 
-            this.splitContainer1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.splitContainer1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.splitContainer1.Location = new System.Drawing.Point(0, 27);
             this.splitContainer1.Name = "splitContainer1";
             // 
@@ -101,6 +121,8 @@
             // 
             // splitContainer1.Panel2
             // 
+            this.splitContainer1.Panel2.Controls.Add(this.btGo);
+            this.splitContainer1.Panel2.Controls.Add(this.tbPath);
             this.splitContainer1.Panel2.Controls.Add(this.label2);
             this.splitContainer1.Panel2.Controls.Add(this.tvLocal);
             this.splitContainer1.Size = new System.Drawing.Size(582, 387);
@@ -109,8 +131,8 @@
             // 
             // btRemove
             // 
-            this.btRemove.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.btRemove.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.btRemove.Enabled = false;
             this.btRemove.Location = new System.Drawing.Point(3, 47);
             this.btRemove.Name = "btRemove";
@@ -123,9 +145,9 @@
             // tvRemote
             // 
             this.tvRemote.AllowDrop = true;
-            this.tvRemote.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.tvRemote.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.tvRemote.ImageIndex = 0;
             this.tvRemote.ImageList = this.imageList;
             this.tvRemote.Location = new System.Drawing.Point(4, 72);
@@ -169,8 +191,8 @@
             // 
             // tbTag
             // 
-            this.tbTag.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.tbTag.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.tbTag.Location = new System.Drawing.Point(42, 23);
             this.tbTag.Name = "tbTag";
             this.tbTag.Size = new System.Drawing.Size(184, 20);
@@ -197,15 +219,15 @@
             // 
             // tvLocal
             // 
-            this.tvLocal.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.tvLocal.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.tvLocal.ImageIndex = 0;
             this.tvLocal.ImageList = this.imageList;
-            this.tvLocal.Location = new System.Drawing.Point(0, 20);
+            this.tvLocal.Location = new System.Drawing.Point(0, 47);
             this.tvLocal.Name = "tvLocal";
             this.tvLocal.SelectedImageIndex = 0;
-            this.tvLocal.Size = new System.Drawing.Size(283, 367);
+            this.tvLocal.Size = new System.Drawing.Size(283, 340);
             this.tvLocal.TabIndex = 0;
             this.tvLocal.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.tvLocal_ItemDrag);
             this.tvLocal.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.tvLocal_NodeMouseDoubleClick);
@@ -252,6 +274,23 @@
             // epTag
             // 
             this.epTag.ContainerControl = this;
+            // 
+            // tbPath
+            // 
+            this.tbPath.Location = new System.Drawing.Point(4, 25);
+            this.tbPath.Name = "tbPath";
+            this.tbPath.Size = new System.Drawing.Size(199, 20);
+            this.tbPath.TabIndex = 6;
+            // 
+            // btGo
+            // 
+            this.btGo.Location = new System.Drawing.Point(208, 21);
+            this.btGo.Name = "btGo";
+            this.btGo.Size = new System.Drawing.Size(38, 23);
+            this.btGo.TabIndex = 7;
+            this.btGo.Text = "Go";
+            this.btGo.UseVisualStyleBackColor = true;
+            this.btGo.Click += new System.EventHandler(this.btGo_Click);
             // 
             // MainWindow
             // 
@@ -301,6 +340,10 @@
         private System.Windows.Forms.Button btRemove;
         private System.Windows.Forms.ImageList imageList;
         private System.Windows.Forms.ErrorProvider epTag;
+        private System.Windows.Forms.ToolStripMenuItem toolsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
+        private System.Windows.Forms.Button btGo;
+        private System.Windows.Forms.TextBox tbPath;
     }
 }
 

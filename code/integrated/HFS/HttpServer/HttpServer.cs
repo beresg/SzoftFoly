@@ -13,12 +13,6 @@ using SharpCompress.Common;
 
 namespace HFS.HttpServer
 {
-    /*public class Label
-    {
-        public String Name { get; set; }
-        public String Parent { get; set; }
-    }*/
-
     public class File
     {
         public String ID { get; set; }
@@ -71,8 +65,6 @@ namespace HFS.HttpServer
         private String root;
         private UInt16 port;
 
-        //Temporary
-        //public List<Label> Labels { get; set; }
         public List<File> Files { get; set; }
 
 
@@ -116,7 +108,6 @@ namespace HFS.HttpServer
             TcpListener listener = (TcpListener)ar.AsyncState;
             tcpClientConnected.Set();
 
-            //if(listener)
             try
             {
                 Process(listener.EndAcceptTcpClient(ar));
@@ -189,7 +180,6 @@ namespace HFS.HttpServer
             switch (request.BaseUrl)
             {
                 case "/":
-                    //using (StreamReader sr = new StreamReader("frame.html"))
                     if (System.IO.File.Exists(root + "index.html"))
                     {
                         using (StreamReader sr = new StreamReader(root + "index.html"))
@@ -336,7 +326,8 @@ namespace HFS.HttpServer
             {
                 using (MemoryStream stream = new MemoryStream())
                 {
-                    using (GZipStream gZipStream = new GZipStream(stream, CompressionMode.Compress))
+                    response.Stream.Seek(0, SeekOrigin.Begin);
+                    using(GZipStream gZipStream = new GZipStream(stream, CompressionMode.Compress))
                         response.Stream.CopyTo(gZipStream);
 
                     byte[] compressed = stream.ToArray();
@@ -355,6 +346,7 @@ namespace HFS.HttpServer
                 {
                     using (MemoryStream stream = new MemoryStream())
                     {
+                        response.Stream.Seek(0, SeekOrigin.Begin);
                         using (DeflateStream deflateStream = new DeflateStream(stream, CompressionMode.Compress))
                             response.Stream.CopyTo(deflateStream);
 
@@ -454,8 +446,6 @@ namespace HFS.HttpServer
                 json.Append("\"id\" : \"" + file.ID + "\",");
                 json.Append("\"size\" : \"" + file.Size + "\",");
                 json.Append("\"name\" : \"" + Path.GetFileName(file.Path) + "\",");
-                //json.Append("\"label\" : \"" + file.Label + "\",");
-                //json.Append("\"extension\" : \"" + file.Extension + "\",");
                 json.Append("\"date\" : \"" + file.Date + "\",");
                 json.Append("\"labels\" : [");
                 foreach (String label in file.Labels)
