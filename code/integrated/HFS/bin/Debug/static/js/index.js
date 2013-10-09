@@ -170,4 +170,8 @@
       }
     });
     
+    $( "#stylesheet-changer .stylesheet-opt" ).click(function(){
+        $( "#main-stylesheet" ).attr("href",$(this).data("css-file"));
+    });
+    
 });
