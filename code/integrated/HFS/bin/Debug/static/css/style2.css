@@ -227,7 +227,7 @@ ul#navlist {
 #header {
      width: 750px;
      height: 150px;
-     background: url('../img/tech_02.jpg') top left no-repeat;
+     background: url('../img/style2/tech_02.jpg') top left no-repeat;
      padding: 50px 0 0 0;
 }
 
@@ -289,7 +289,7 @@ ul#navlist {
 
 #footer {
      width: 750px;
-     background: url('../img/tech_09.jpg') top left repeat-y;
+     background: url('../img/style2/tech_09.jpg') top left repeat-y;
      padding: 0;
 }
 
@@ -305,7 +305,7 @@ ul#navlist {
 
 #bottom {
      width: 750px;
-     background: url('../img/tech_10.jpg') top left no-repeat;
+     background: url('../img/style2/tech_10.jpg') top left no-repeat;
 }
 
 #bottom p {
@@ -344,3 +344,21 @@ img {
 }
 
 .spacer { clear:both; padding: 0; margin: 0; }
+
+.stylesheet-opt {
+     display: inline-block;
+     height: 33px;
+     width: 33px;
+}
+
+.stylesheet-opt.blue {
+     background: url('../img/blue-theme.gif') top left no-repeat;
+}
+
+.stylesheet-opt.black {
+     background: url('../img/black-theme.gif') top left no-repeat;
+}
+
+.stylesheet-opt.white {
+     background: url('../img/white-theme.gif') top left no-repeat;
+}

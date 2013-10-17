@@ -27,3 +27,4 @@ C:\Users\lazac\Desktop\dolgok\egyetem\aktualis_kurzusok\szoftverfolyamat-terveze
 C:\Users\lazac\Desktop\dolgok\egyetem\aktualis_kurzusok\szoftverfolyamat-tervezese-es-kivitelezese\SzoftFoly\code\integrated\HFS\obj\x86\Debug\GenerateResource.write.1.tlog
 C:\Users\lazac\Desktop\dolgok\egyetem\aktualis_kurzusok\szoftverfolyamat-tervezese-es-kivitelezese\SzoftFoly\code\integrated\HFS\obj\x86\Debug\HFS.exe
 C:\Users\lazac\Desktop\dolgok\egyetem\aktualis_kurzusok\szoftverfolyamat-tervezese-es-kivitelezese\SzoftFoly\code\integrated\HFS\obj\x86\Debug\HFS.pdb
+C:\Users\lazac\Desktop\dolgok\egyetem\aktualis_kurzusok\szoftverfolyamat-tervezese-es-kivitelezese\SzoftFoly\code\integrated\HFS\obj\x86\Debug\HFS.SettingsWindow.resources
