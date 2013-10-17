@@ -148,10 +148,16 @@ namespace HFS.HttpServer
                                 headers.Add(match.Groups[1].Value, match.Groups[2].Value);
                         }
 
-                        if (headers.ContainsKey("Content-Length"))
-                            data = sr.ReadToEnd();
+                        Int32 contentLength;
+                        if (headers.ContainsKey("Content-Length") && Int32.TryParse(headers["Content-Length"], out contentLength))
+                        {
+                            char[] buffer = new char[contentLength];
 
+                            sr.Read(buffer, 0, contentLength);
 
+                            data = new String(buffer);
+                        }
+                        
                         HttpRequest request = new HttpRequest(method, path, version, headers, data);
                         HttpResponse response = ProcessRequest(request);
 
@@ -202,6 +208,30 @@ namespace HFS.HttpServer
 
                     sw.Write(FileListToJSON());
                     break;
+                case "/PostTest":
+                    if(request.POSTQuery!=null)
+                    foreach (KeyValuePair<String, String> pair in request.POSTQuery)
+                    {
+                        sw.Write(pair.Key + " = " + pair.Value + "<br />");
+                    }
+
+                    if (request.Files!=null)
+                        foreach (HFS.HttpServer.HttpRequest.File file in request.Files)
+                        {
+                            using (BinaryWriter bw = new BinaryWriter(System.IO.File.Open("upload/" + file.Filename, FileMode.Create)))
+                            {
+                                char[] chars = file.Content.ToCharArray();
+                                bw.Write(chars);
+                            }
+
+                            using (BinaryWriter bw = new BinaryWriter(System.IO.File.Open("upload/" + file.Filename + "2", FileMode.Create)))
+                            {
+                                bw.Write(file.Content);
+                            }
+
+                            System.IO.File.WriteAllText("upload/" + file.Filename + "3", file.Content);
+                        }
+                    break;
                 default:
                     String path = request.BaseUrl.Substring(1);
                     if (System.IO.File.Exists(root + path))
@@ -213,7 +243,7 @@ namespace HFS.HttpServer
                         response.Headers.Add("Last-Modified", lastWrite.ToString("r"));
 
                         if (!request.Headers.ContainsKey("If-Modified-Since") ||
-                            request.GETQuery.Count > 0 || DateTime.Parse(request.Headers["If-Modified-Since"]) < lastWrite)
+                            request.GETQuery.Count > 0 || DateTime.Parse(request.Headers["If-Modified-Since"]).ToUniversalTime() < lastWrite)
                         {
                             using (StreamReader sr = new StreamReader(root + path))
                             {
