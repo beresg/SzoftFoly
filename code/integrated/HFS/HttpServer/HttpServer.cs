@@ -116,6 +116,46 @@ namespace HFS.HttpServer
             {}
         }
 
+        String ReadLine(NetworkStream ns)
+        {
+            StringBuilder sb = new StringBuilder();
+            bool lastR = false;
+            byte b;
+            int i;
+            bool end = false;
+
+            while(!end)
+            {
+                i = ns.ReadByte();
+                if (i == -1)
+                    end = true;
+
+                b = (byte)i;
+
+                if (b == (byte)'\r')
+                {
+                    lastR = true;
+                }
+                else if (b == (byte)'\n' && lastR)
+                {
+                    end = true;
+                }
+                else
+                {
+                    if (lastR)
+                    {
+                        lastR = false;
+                        sb.Append((byte)'\r');
+                    }
+
+                    sb.Append((char)b);
+                }
+
+            }
+
+            return sb.ToString();
+        }
+
         private void Process(object obj)
         {
             TcpClient client = obj as TcpClient;
@@ -123,9 +163,8 @@ namespace HFS.HttpServer
             if (client != null)
             {
                 NetworkStream ns = client.GetStream();
-                StreamReader sr = new StreamReader(ns);
 
-                String line = sr.ReadLine();
+                String line = ReadLine(ns);
 
                 if (line != null)
                 {
@@ -141,7 +180,7 @@ namespace HFS.HttpServer
                         String data = String.Empty;
 
                         regex = new Regex("(.*?):(.*)");
-                        while ((line = sr.ReadLine()) != String.Empty)
+                        while ((line = ReadLine(ns)) != String.Empty)
                         {
                             match = regex.Match(line);
                             if (match.Success && !headers.ContainsKey(match.Groups[1].Value))
@@ -151,11 +190,11 @@ namespace HFS.HttpServer
                         Int32 contentLength;
                         if (headers.ContainsKey("Content-Length") && Int32.TryParse(headers["Content-Length"], out contentLength))
                         {
-                            char[] buffer = new char[contentLength];
+                            byte[] buffer = new byte[contentLength];
 
-                            sr.Read(buffer, 0, contentLength);
+                            ns.Read(buffer, 0, contentLength);
 
-                            data = new String(buffer);
+                            data = ByteArrayToString(buffer);
                         }
                         
                         HttpRequest request = new HttpRequest(method, path, version, headers, data);
@@ -220,16 +259,9 @@ namespace HFS.HttpServer
                         {
                             using (BinaryWriter bw = new BinaryWriter(System.IO.File.Open("upload/" + file.Filename, FileMode.Create)))
                             {
-                                char[] chars = file.Content.ToCharArray();
+                                byte[] chars = StringToByteArray(file.Content);
                                 bw.Write(chars);
                             }
-
-                            using (BinaryWriter bw = new BinaryWriter(System.IO.File.Open("upload/" + file.Filename + "2", FileMode.Create)))
-                            {
-                                bw.Write(file.Content);
-                            }
-
-                            System.IO.File.WriteAllText("upload/" + file.Filename + "3", file.Content);
                         }
                     break;
                 default:
@@ -498,6 +530,32 @@ namespace HFS.HttpServer
             json.Append("}");
 
             return json.ToString();
+        }
+
+        public static String ByteArrayToString(Byte[] bytes)
+        {
+            if (bytes == null)
+                return String.Empty;
+
+            StringBuilder sb = new StringBuilder();
+            foreach (Byte b in bytes)
+                sb.Append((Char)b);
+
+            return sb.ToString();
+        }
+
+        public static Byte[] StringToByteArray(String s)
+        {
+            Byte[] bs = new Byte[s.Length];
+            Int32 i = 0;
+
+            foreach (Char ch in s)
+            {
+                bs[i] = (Byte)ch;
+                ++i;
+            }
+
+            return bs;
         }
     }
 }
