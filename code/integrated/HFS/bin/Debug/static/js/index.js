@@ -174,4 +174,24 @@
         $( "#main-stylesheet" ).attr("href",$(this).data("css-file"));
     });
     
+    $( "#sendFileButton" )
+      .button()
+      .click(function( event ) {
+            var formData = new FormData($('#fileInputForm')[0]);
+            $.ajax({
+                url: '/PostTest',  //Server script to process data
+                type: 'POST',
+                //success: alert("success"),
+                //error: alert("error"),
+                // Form data
+                data: formData,
+                //Options to tell jQuery not to process data or worry about content-type.
+                cache: false,
+                contentType: false,
+                processData: false
+            });
+            event.preventDefault();
+    });
+    
+    
 });
