@@ -191,8 +191,10 @@ namespace HFS.HttpServer
                         if (headers.ContainsKey("Content-Length") && Int32.TryParse(headers["Content-Length"], out contentLength))
                         {
                             byte[] buffer = new byte[contentLength];
+                            int read = 0;
 
-                            ns.Read(buffer, 0, contentLength);
+                            while(read != contentLength)
+                                read += ns.Read(buffer, read, contentLength-read);
 
                             data = ByteArrayToString(buffer);
                         }
