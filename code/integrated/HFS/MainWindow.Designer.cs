@@ -36,10 +36,6 @@
             this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.label3 = new System.Windows.Forms.Label();
-            this.chatBox = new System.Windows.Forms.RichTextBox();
-            this.tboChatMessage = new System.Windows.Forms.TextBox();
-            this.btnSend = new System.Windows.Forms.Button();
             this.btRemove = new System.Windows.Forms.Button();
             this.tvRemote = new System.Windows.Forms.TreeView();
             this.imageList = new System.Windows.Forms.ImageList(this.components);
@@ -51,16 +47,22 @@
             this.tbPath = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.tvLocal = new System.Windows.Forms.TreeView();
+            this.chatBox = new System.Windows.Forms.RichTextBox();
+            this.tboChatMessage = new System.Windows.Forms.TextBox();
+            this.btnSend = new System.Windows.Forms.Button();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.toolStripSplitButton = new System.Windows.Forms.ToolStripSplitButton();
+            this.startServerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.stopServerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.epTag = new System.Windows.Forms.ErrorProvider(this.components);
-            this.label4 = new System.Windows.Forms.Label();
             this.cboxSetting = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
             this.lServer = new System.Windows.Forms.Label();
             this.lvLog = new System.Windows.Forms.ListView();
-            this.toolStripSplitButton = new System.Windows.Forms.ToolStripSplitButton();
-            this.startServerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.stopServerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -68,6 +70,13 @@
             this.splitContainer1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.epTag)).BeginInit();
+            this.tabControl1.SuspendLayout();
+            this.tabPage1.SuspendLayout();
+            this.tabPage2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
+            this.splitContainer2.Panel1.SuspendLayout();
+            this.splitContainer2.Panel2.SuspendLayout();
+            this.splitContainer2.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -113,18 +122,12 @@
             // 
             // splitContainer1
             // 
-            this.splitContainer1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.splitContainer1.Location = new System.Drawing.Point(0, 27);
+            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer1.Location = new System.Drawing.Point(0, 0);
             this.splitContainer1.Name = "splitContainer1";
             // 
             // splitContainer1.Panel1
             // 
-            this.splitContainer1.Panel1.Controls.Add(this.label3);
-            this.splitContainer1.Panel1.Controls.Add(this.chatBox);
-            this.splitContainer1.Panel1.Controls.Add(this.tboChatMessage);
-            this.splitContainer1.Panel1.Controls.Add(this.btnSend);
             this.splitContainer1.Panel1.Controls.Add(this.btRemove);
             this.splitContainer1.Panel1.Controls.Add(this.tvRemote);
             this.splitContainer1.Panel1.Controls.Add(this.lTag);
@@ -138,55 +141,9 @@
             this.splitContainer1.Panel2.Controls.Add(this.tbPath);
             this.splitContainer1.Panel2.Controls.Add(this.label2);
             this.splitContainer1.Panel2.Controls.Add(this.tvLocal);
-            this.splitContainer1.Size = new System.Drawing.Size(582, 309);
+            this.splitContainer1.Size = new System.Drawing.Size(582, 237);
             this.splitContainer1.SplitterDistance = 292;
             this.splitContainer1.TabIndex = 2;
-            // 
-            // label3
-            // 
-            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(9, 202);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(32, 13);
-            this.label3.TabIndex = 14;
-            this.label3.Text = "Chat:";
-            // 
-            // chatBox
-            // 
-            this.chatBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.chatBox.BackColor = System.Drawing.Color.White;
-            this.chatBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.chatBox.Enabled = false;
-            this.chatBox.Location = new System.Drawing.Point(4, 218);
-            this.chatBox.Name = "chatBox";
-            this.chatBox.ReadOnly = true;
-            this.chatBox.Size = new System.Drawing.Size(285, 61);
-            this.chatBox.TabIndex = 13;
-            this.chatBox.Text = "";
-            // 
-            // tboChatMessage
-            // 
-            this.tboChatMessage.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.tboChatMessage.Location = new System.Drawing.Point(4, 284);
-            this.tboChatMessage.Name = "tboChatMessage";
-            this.tboChatMessage.Size = new System.Drawing.Size(228, 20);
-            this.tboChatMessage.TabIndex = 12;
-            this.tboChatMessage.TextChanged += new System.EventHandler(this.tboChatMessage_TextChanged);
-            // 
-            // btnSend
-            // 
-            this.btnSend.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSend.Enabled = false;
-            this.btnSend.Location = new System.Drawing.Point(234, 283);
-            this.btnSend.Name = "btnSend";
-            this.btnSend.Size = new System.Drawing.Size(55, 23);
-            this.btnSend.TabIndex = 11;
-            this.btnSend.Text = "Send";
-            this.btnSend.UseVisualStyleBackColor = true;
-            this.btnSend.Click += new System.EventHandler(this.btnSend_Click);
             // 
             // btRemove
             // 
@@ -209,10 +166,10 @@
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.tvRemote.ImageIndex = 0;
             this.tvRemote.ImageList = this.imageList;
-            this.tvRemote.Location = new System.Drawing.Point(4, 72);
+            this.tvRemote.Location = new System.Drawing.Point(4, 74);
             this.tvRemote.Name = "tvRemote";
             this.tvRemote.SelectedImageIndex = 0;
-            this.tvRemote.Size = new System.Drawing.Size(286, 127);
+            this.tvRemote.Size = new System.Drawing.Size(286, 162);
             this.tvRemote.TabIndex = 9;
             this.tvRemote.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tvRemote_AfterSelect);
             this.tvRemote.DragDrop += new System.Windows.Forms.DragEventHandler(this.tvRemote_DragDrop);
@@ -306,10 +263,47 @@
             this.tvLocal.Location = new System.Drawing.Point(0, 47);
             this.tvLocal.Name = "tvLocal";
             this.tvLocal.SelectedImageIndex = 0;
-            this.tvLocal.Size = new System.Drawing.Size(283, 262);
+            this.tvLocal.Size = new System.Drawing.Size(283, 190);
             this.tvLocal.TabIndex = 0;
             this.tvLocal.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.tvLocal_ItemDrag);
             this.tvLocal.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.tvLocal_NodeMouseDoubleClick);
+            // 
+            // chatBox
+            // 
+            this.chatBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.chatBox.BackColor = System.Drawing.Color.White;
+            this.chatBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.chatBox.Enabled = false;
+            this.chatBox.Location = new System.Drawing.Point(2, 3);
+            this.chatBox.Name = "chatBox";
+            this.chatBox.ReadOnly = true;
+            this.chatBox.Size = new System.Drawing.Size(569, 87);
+            this.chatBox.TabIndex = 13;
+            this.chatBox.Text = "";
+            // 
+            // tboChatMessage
+            // 
+            this.tboChatMessage.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.tboChatMessage.Location = new System.Drawing.Point(4, 96);
+            this.tboChatMessage.Name = "tboChatMessage";
+            this.tboChatMessage.Size = new System.Drawing.Size(506, 20);
+            this.tboChatMessage.TabIndex = 12;
+            this.tboChatMessage.TextChanged += new System.EventHandler(this.tboChatMessage_TextChanged);
+            // 
+            // btnSend
+            // 
+            this.btnSend.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnSend.Enabled = false;
+            this.btnSend.Location = new System.Drawing.Point(516, 94);
+            this.btnSend.Name = "btnSend";
+            this.btnSend.Size = new System.Drawing.Size(55, 23);
+            this.btnSend.TabIndex = 11;
+            this.btnSend.Text = "Send";
+            this.btnSend.UseVisualStyleBackColor = true;
+            this.btnSend.Click += new System.EventHandler(this.btnSend_Click);
             // 
             // statusStrip1
             // 
@@ -321,19 +315,38 @@
             this.statusStrip1.TabIndex = 3;
             this.statusStrip1.Text = "statusStrip1";
             // 
+            // toolStripSplitButton
+            // 
+            this.toolStripSplitButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripSplitButton.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.startServerToolStripMenuItem,
+            this.stopServerToolStripMenuItem});
+            this.toolStripSplitButton.Image = global::HFS.Properties.Resources.play;
+            this.toolStripSplitButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripSplitButton.Name = "toolStripSplitButton";
+            this.toolStripSplitButton.Size = new System.Drawing.Size(32, 20);
+            this.toolStripSplitButton.Text = "toolStripSplitButton1";
+            // 
+            // startServerToolStripMenuItem
+            // 
+            this.startServerToolStripMenuItem.Enabled = false;
+            this.startServerToolStripMenuItem.Image = global::HFS.Properties.Resources.play;
+            this.startServerToolStripMenuItem.Name = "startServerToolStripMenuItem";
+            this.startServerToolStripMenuItem.Size = new System.Drawing.Size(132, 22);
+            this.startServerToolStripMenuItem.Text = "Start server";
+            this.startServerToolStripMenuItem.Click += new System.EventHandler(this.startServerToolStripMenuItem_Click);
+            // 
+            // stopServerToolStripMenuItem
+            // 
+            this.stopServerToolStripMenuItem.Image = global::HFS.Properties.Resources.stop;
+            this.stopServerToolStripMenuItem.Name = "stopServerToolStripMenuItem";
+            this.stopServerToolStripMenuItem.Size = new System.Drawing.Size(132, 22);
+            this.stopServerToolStripMenuItem.Text = "Stop server";
+            this.stopServerToolStripMenuItem.Click += new System.EventHandler(this.stopServerToolStripMenuItem_Click);
+            // 
             // epTag
             // 
             this.epTag.ContainerControl = this;
-            // 
-            // label4
-            // 
-            this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(8, 337);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(28, 13);
-            this.label4.TabIndex = 15;
-            this.label4.Text = "Log:";
             // 
             // cboxSetting
             // 
@@ -366,55 +379,78 @@
             // 
             // lvLog
             // 
-            this.lvLog.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.lvLog.Location = new System.Drawing.Point(1, 353);
+            this.lvLog.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lvLog.Location = new System.Drawing.Point(3, 3);
             this.lvLog.Name = "lvLog";
-            this.lvLog.Size = new System.Drawing.Size(578, 67);
+            this.lvLog.Size = new System.Drawing.Size(568, 158);
             this.lvLog.TabIndex = 19;
             this.lvLog.UseCompatibleStateImageBehavior = false;
             // 
-            // toolStripSplitButton
+            // tabControl1
             // 
-            this.toolStripSplitButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripSplitButton.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.startServerToolStripMenuItem,
-            this.stopServerToolStripMenuItem});
-            this.toolStripSplitButton.Image = global::HFS.Properties.Resources.play;
-            this.toolStripSplitButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripSplitButton.Name = "toolStripSplitButton";
-            this.toolStripSplitButton.Size = new System.Drawing.Size(32, 20);
-            this.toolStripSplitButton.Text = "toolStripSplitButton1";
+            this.tabControl1.Controls.Add(this.tabPage1);
+            this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControl1.Location = new System.Drawing.Point(0, 0);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(582, 146);
+            this.tabControl1.TabIndex = 20;
             // 
-            // startServerToolStripMenuItem
+            // tabPage1
             // 
-            this.startServerToolStripMenuItem.Enabled = false;
-            this.startServerToolStripMenuItem.Image = global::HFS.Properties.Resources.play;
-            this.startServerToolStripMenuItem.Name = "startServerToolStripMenuItem";
-            this.startServerToolStripMenuItem.Size = new System.Drawing.Size(132, 22);
-            this.startServerToolStripMenuItem.Text = "Start server";
-            this.startServerToolStripMenuItem.Click += new System.EventHandler(this.startServerToolStripMenuItem_Click);
+            this.tabPage1.Controls.Add(this.chatBox);
+            this.tabPage1.Controls.Add(this.btnSend);
+            this.tabPage1.Controls.Add(this.tboChatMessage);
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(574, 120);
+            this.tabPage1.TabIndex = 0;
+            this.tabPage1.Text = "Chat";
+            this.tabPage1.UseVisualStyleBackColor = true;
             // 
-            // stopServerToolStripMenuItem
+            // tabPage2
             // 
-            this.stopServerToolStripMenuItem.Image = global::HFS.Properties.Resources.stop;
-            this.stopServerToolStripMenuItem.Name = "stopServerToolStripMenuItem";
-            this.stopServerToolStripMenuItem.Size = new System.Drawing.Size(132, 22);
-            this.stopServerToolStripMenuItem.Text = "Stop server";
-            this.stopServerToolStripMenuItem.Click += new System.EventHandler(this.stopServerToolStripMenuItem_Click);
+            this.tabPage2.Controls.Add(this.lvLog);
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(574, 164);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "Log";
+            this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // splitContainer2
+            // 
+            this.splitContainer2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.splitContainer2.Location = new System.Drawing.Point(0, 27);
+            this.splitContainer2.Name = "splitContainer2";
+            this.splitContainer2.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // splitContainer2.Panel1
+            // 
+            this.splitContainer2.Panel1.Controls.Add(this.splitContainer1);
+            // 
+            // splitContainer2.Panel2
+            // 
+            this.splitContainer2.Panel2.Controls.Add(this.tabControl1);
+            this.splitContainer2.Size = new System.Drawing.Size(582, 387);
+            this.splitContainer2.SplitterDistance = 237;
+            this.splitContainer2.TabIndex = 21;
             // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(582, 439);
-            this.Controls.Add(this.lvLog);
+            this.Controls.Add(this.splitContainer2);
             this.Controls.Add(this.lServer);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.cboxSetting);
-            this.Controls.Add(this.label4);
             this.Controls.Add(this.statusStrip1);
-            this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "MainWindow";
@@ -431,6 +467,14 @@
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.epTag)).EndInit();
+            this.tabControl1.ResumeLayout(false);
+            this.tabPage1.ResumeLayout(false);
+            this.tabPage1.PerformLayout();
+            this.tabPage2.ResumeLayout(false);
+            this.splitContainer2.Panel1.ResumeLayout(false);
+            this.splitContainer2.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
+            this.splitContainer2.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -460,15 +504,17 @@
         private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
         private System.Windows.Forms.Button btGo;
         private System.Windows.Forms.TextBox tbPath;
-        private System.Windows.Forms.Label label3;
         private System.Windows.Forms.RichTextBox chatBox;
         private System.Windows.Forms.TextBox tboChatMessage;
         private System.Windows.Forms.Button btnSend;
-        private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.ComboBox cboxSetting;
         private System.Windows.Forms.Label lServer;
         private System.Windows.Forms.ListView lvLog;
+        private System.Windows.Forms.SplitContainer splitContainer2;
+        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TabPage tabPage2;
     }
 }
 

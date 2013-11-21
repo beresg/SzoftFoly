@@ -30,6 +30,7 @@ namespace HFS
             Logger.LogControl = lvLog;
             Logger.LogDestination = LoggingDestination.LogToAll;
             Logger.LogFileName = "hfs";
+            Logger.LogLevel = 3;
 
             // settings
             bs.DataSource = configs;
@@ -109,6 +110,8 @@ namespace HFS
             }
             catch (Exception)
             {}
+
+            ("Changed current working directory to '" + path + "'.").LogInfo(3);
         }
 
         private void btAdd_Click(object sender, EventArgs e)
@@ -116,11 +119,14 @@ namespace HFS
             if (tvRemote.Nodes.ContainsKey(tbTag.Text) == false)
             {
                 tvRemote.Nodes.Add(tbTag.Text, tbTag.Text, 0, 0);
+                ("The '" + tbTag.Text + "' tag successfully added.").LogInfo(3);
+
                 epTag.Clear();
             }
             else
             {
                 epTag.SetError(tbTag, "A hozzáadni kívánt tag már létezik!");
+                "A hozzáadni kívánt tag már létezik!".LogError();
             }
         }
 
@@ -214,6 +220,8 @@ namespace HFS
 
                             if (files[i].Labels.Count == 0)
                                 server.Files.Remove(files[i]);
+
+                            ("The '" + files[i].FileName + "' is removed.").LogInfo(3);
                         }
 
                         break;
@@ -230,8 +238,8 @@ namespace HFS
                             else
                                 files[0].Labels.Remove(labelName);
 
+                            ("The '" + files[0].FileName + "' is removed.").LogInfo(3);
                         }
-
 
                         break;
                 }
@@ -309,6 +317,7 @@ namespace HFS
         private void btGo_Click(object sender, EventArgs e)
         {
             String path = tbPath.Text;
+
             LoadFiles(path);
         }
 
@@ -331,12 +340,13 @@ namespace HFS
             {
                 if (server.Running)
                 {
-                    MessageBox.Show("Futó szerver beállitásait nem lehet módositani!", "Rendszerüzenet", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    //MessageBox.Show("Futó szerver beállitásait nem lehet módositani!", "Rendszerüzenet", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                     return;
                 }
 
-                Config configItem = getConfigItem(cboxSetting.SelectedText);
+                Config configItem = getConfigItem(((Config)(cboxSetting.SelectedItem)).Name);
 
+                ("The selected configuration is changed to [Name=" + configItem.Name + ", Port=" + configItem.Port + ", AllowedFileUpload=" + configItem.AllowUpload + ", MaxUsers=" + configItem.MaxUsers + "].").LogInfo(3);
                 server.Port = (ushort)configItem.Port;
                 server.AllowFileUpload = configItem.AllowUpload;
                 server.MaxClientNumber = configItem.MaxUsers;
