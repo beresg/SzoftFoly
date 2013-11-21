@@ -36,6 +36,11 @@
             this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.logBox = new System.Windows.Forms.RichTextBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.chatBox = new System.Windows.Forms.RichTextBox();
+            this.tboChatMessage = new System.Windows.Forms.TextBox();
+            this.btnSend = new System.Windows.Forms.Button();
             this.btRemove = new System.Windows.Forms.Button();
             this.tvRemote = new System.Windows.Forms.TreeView();
             this.imageList = new System.Windows.Forms.ImageList(this.components);
@@ -43,6 +48,8 @@
             this.btAdd = new System.Windows.Forms.Button();
             this.tbTag = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.btGo = new System.Windows.Forms.Button();
+            this.tbPath = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.tvLocal = new System.Windows.Forms.TreeView();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
@@ -50,8 +57,10 @@
             this.startServerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.stopServerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.epTag = new System.Windows.Forms.ErrorProvider(this.components);
-            this.tbPath = new System.Windows.Forms.TextBox();
-            this.btGo = new System.Windows.Forms.Button();
+            this.label4 = new System.Windows.Forms.Label();
+            this.cboxSetting = new System.Windows.Forms.ComboBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.lServer = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -104,14 +113,18 @@
             // 
             // splitContainer1
             // 
-            this.splitContainer1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.splitContainer1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.splitContainer1.Location = new System.Drawing.Point(0, 27);
             this.splitContainer1.Name = "splitContainer1";
             // 
             // splitContainer1.Panel1
             // 
+            this.splitContainer1.Panel1.Controls.Add(this.label3);
+            this.splitContainer1.Panel1.Controls.Add(this.chatBox);
+            this.splitContainer1.Panel1.Controls.Add(this.tboChatMessage);
+            this.splitContainer1.Panel1.Controls.Add(this.btnSend);
             this.splitContainer1.Panel1.Controls.Add(this.btRemove);
             this.splitContainer1.Panel1.Controls.Add(this.tvRemote);
             this.splitContainer1.Panel1.Controls.Add(this.lTag);
@@ -125,14 +138,74 @@
             this.splitContainer1.Panel2.Controls.Add(this.tbPath);
             this.splitContainer1.Panel2.Controls.Add(this.label2);
             this.splitContainer1.Panel2.Controls.Add(this.tvLocal);
-            this.splitContainer1.Size = new System.Drawing.Size(582, 387);
+            this.splitContainer1.Size = new System.Drawing.Size(582, 309);
             this.splitContainer1.SplitterDistance = 292;
             this.splitContainer1.TabIndex = 2;
             // 
+            // logBox
+            // 
+            this.logBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.logBox.BackColor = System.Drawing.Color.White;
+            this.logBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.logBox.Enabled = false;
+            this.logBox.Location = new System.Drawing.Point(5, 353);
+            this.logBox.Name = "logBox";
+            this.logBox.ReadOnly = true;
+            this.logBox.Size = new System.Drawing.Size(573, 61);
+            this.logBox.TabIndex = 15;
+            this.logBox.Text = "";
+            // 
+            // label3
+            // 
+            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(9, 202);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(32, 13);
+            this.label3.TabIndex = 14;
+            this.label3.Text = "Chat:";
+            // 
+            // chatBox
+            // 
+            this.chatBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.chatBox.BackColor = System.Drawing.Color.White;
+            this.chatBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.chatBox.Enabled = false;
+            this.chatBox.Location = new System.Drawing.Point(4, 218);
+            this.chatBox.Name = "chatBox";
+            this.chatBox.ReadOnly = true;
+            this.chatBox.Size = new System.Drawing.Size(285, 61);
+            this.chatBox.TabIndex = 13;
+            this.chatBox.Text = "";
+            // 
+            // tboChatMessage
+            // 
+            this.tboChatMessage.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.tboChatMessage.Location = new System.Drawing.Point(4, 284);
+            this.tboChatMessage.Name = "tboChatMessage";
+            this.tboChatMessage.Size = new System.Drawing.Size(228, 20);
+            this.tboChatMessage.TabIndex = 12;
+            this.tboChatMessage.TextChanged += new System.EventHandler(this.tboChatMessage_TextChanged);
+            // 
+            // btnSend
+            // 
+            this.btnSend.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnSend.Enabled = false;
+            this.btnSend.Location = new System.Drawing.Point(234, 283);
+            this.btnSend.Name = "btnSend";
+            this.btnSend.Size = new System.Drawing.Size(55, 23);
+            this.btnSend.TabIndex = 11;
+            this.btnSend.Text = "Send";
+            this.btnSend.UseVisualStyleBackColor = true;
+            this.btnSend.Click += new System.EventHandler(this.btnSend_Click);
+            // 
             // btRemove
             // 
-            this.btRemove.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.btRemove.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.btRemove.Enabled = false;
             this.btRemove.Location = new System.Drawing.Point(3, 47);
             this.btRemove.Name = "btRemove";
@@ -145,15 +218,15 @@
             // tvRemote
             // 
             this.tvRemote.AllowDrop = true;
-            this.tvRemote.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tvRemote.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.tvRemote.ImageIndex = 0;
             this.tvRemote.ImageList = this.imageList;
             this.tvRemote.Location = new System.Drawing.Point(4, 72);
             this.tvRemote.Name = "tvRemote";
             this.tvRemote.SelectedImageIndex = 0;
-            this.tvRemote.Size = new System.Drawing.Size(286, 315);
+            this.tvRemote.Size = new System.Drawing.Size(286, 127);
             this.tvRemote.TabIndex = 9;
             this.tvRemote.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tvRemote_AfterSelect);
             this.tvRemote.DragDrop += new System.Windows.Forms.DragEventHandler(this.tvRemote_DragDrop);
@@ -191,11 +264,11 @@
             // 
             // tbTag
             // 
-            this.tbTag.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tbTag.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.tbTag.Location = new System.Drawing.Point(42, 23);
             this.tbTag.Name = "tbTag";
-            this.tbTag.Size = new System.Drawing.Size(184, 20);
+            this.tbTag.Size = new System.Drawing.Size(197, 20);
             this.tbTag.TabIndex = 6;
             this.tbTag.TextChanged += new System.EventHandler(this.tbTag_TextChanged);
             // 
@@ -208,6 +281,26 @@
             this.label1.TabIndex = 4;
             this.label1.Text = "Remote Filesystem";
             // 
+            // btGo
+            // 
+            this.btGo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btGo.Location = new System.Drawing.Point(244, 22);
+            this.btGo.Name = "btGo";
+            this.btGo.Size = new System.Drawing.Size(38, 23);
+            this.btGo.TabIndex = 7;
+            this.btGo.Text = "Go";
+            this.btGo.UseVisualStyleBackColor = true;
+            this.btGo.Click += new System.EventHandler(this.btGo_Click);
+            // 
+            // tbPath
+            // 
+            this.tbPath.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.tbPath.Location = new System.Drawing.Point(2, 23);
+            this.tbPath.Name = "tbPath";
+            this.tbPath.Size = new System.Drawing.Size(238, 20);
+            this.tbPath.TabIndex = 6;
+            // 
             // label2
             // 
             this.label2.AutoSize = true;
@@ -219,15 +312,15 @@
             // 
             // tvLocal
             // 
-            this.tvLocal.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tvLocal.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.tvLocal.ImageIndex = 0;
             this.tvLocal.ImageList = this.imageList;
             this.tvLocal.Location = new System.Drawing.Point(0, 47);
             this.tvLocal.Name = "tvLocal";
             this.tvLocal.SelectedImageIndex = 0;
-            this.tvLocal.Size = new System.Drawing.Size(283, 340);
+            this.tvLocal.Size = new System.Drawing.Size(283, 262);
             this.tvLocal.TabIndex = 0;
             this.tvLocal.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.tvLocal_ItemDrag);
             this.tvLocal.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.tvLocal_NodeMouseDoubleClick);
@@ -259,7 +352,7 @@
             this.startServerToolStripMenuItem.Enabled = false;
             this.startServerToolStripMenuItem.Image = global::HFS.Properties.Resources.play;
             this.startServerToolStripMenuItem.Name = "startServerToolStripMenuItem";
-            this.startServerToolStripMenuItem.Size = new System.Drawing.Size(132, 22);
+            this.startServerToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.startServerToolStripMenuItem.Text = "Start server";
             this.startServerToolStripMenuItem.Click += new System.EventHandler(this.startServerToolStripMenuItem_Click);
             // 
@@ -267,7 +360,7 @@
             // 
             this.stopServerToolStripMenuItem.Image = global::HFS.Properties.Resources.stop;
             this.stopServerToolStripMenuItem.Name = "stopServerToolStripMenuItem";
-            this.stopServerToolStripMenuItem.Size = new System.Drawing.Size(132, 22);
+            this.stopServerToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.stopServerToolStripMenuItem.Text = "Stop server";
             this.stopServerToolStripMenuItem.Click += new System.EventHandler(this.stopServerToolStripMenuItem_Click);
             // 
@@ -275,28 +368,55 @@
             // 
             this.epTag.ContainerControl = this;
             // 
-            // tbPath
+            // label4
             // 
-            this.tbPath.Location = new System.Drawing.Point(4, 25);
-            this.tbPath.Name = "tbPath";
-            this.tbPath.Size = new System.Drawing.Size(199, 20);
-            this.tbPath.TabIndex = 6;
+            this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(8, 337);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(28, 13);
+            this.label4.TabIndex = 15;
+            this.label4.Text = "Log:";
             // 
-            // btGo
+            // cboxSetting
             // 
-            this.btGo.Location = new System.Drawing.Point(208, 21);
-            this.btGo.Name = "btGo";
-            this.btGo.Size = new System.Drawing.Size(38, 23);
-            this.btGo.TabIndex = 7;
-            this.btGo.Text = "Go";
-            this.btGo.UseVisualStyleBackColor = true;
-            this.btGo.Click += new System.EventHandler(this.btGo_Click);
+            this.cboxSetting.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.cboxSetting.FormattingEnabled = true;
+            this.cboxSetting.Location = new System.Drawing.Point(456, 2);
+            this.cboxSetting.Name = "cboxSetting";
+            this.cboxSetting.Size = new System.Drawing.Size(121, 21);
+            this.cboxSetting.TabIndex = 16;
+            this.cboxSetting.SelectedIndexChanged += new System.EventHandler(this.cboxSetting_SelectedIndexChanged);
+            // 
+            // label5
+            // 
+            this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label5.AutoSize = true;
+            this.label5.BackColor = System.Drawing.Color.Transparent;
+            this.label5.Location = new System.Drawing.Point(381, 6);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(72, 13);
+            this.label5.TabIndex = 17;
+            this.label5.Text = "Configuration:";
+            // 
+            // lServer
+            // 
+            this.lServer.AutoSize = true;
+            this.lServer.Location = new System.Drawing.Point(347, 423);
+            this.lServer.Name = "lServer";
+            this.lServer.Size = new System.Drawing.Size(0, 13);
+            this.lServer.TabIndex = 18;
             // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(582, 439);
+            this.Controls.Add(this.lServer);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.cboxSetting);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.logBox);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.menuStrip1);
@@ -344,6 +464,15 @@
         private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
         private System.Windows.Forms.Button btGo;
         private System.Windows.Forms.TextBox tbPath;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.RichTextBox chatBox;
+        private System.Windows.Forms.TextBox tboChatMessage;
+        private System.Windows.Forms.Button btnSend;
+        private System.Windows.Forms.RichTextBox logBox;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.ComboBox cboxSetting;
+        private System.Windows.Forms.Label lServer;
     }
 }
 

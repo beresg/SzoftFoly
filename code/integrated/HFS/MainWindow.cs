@@ -13,6 +13,9 @@ namespace HFS
 {
     public partial class MainWindow : Form
     {
+        private BindingList<Config> configs = ConfigAdapter.load();
+        private BindingSource bs = new BindingSource();
+
         private String CURRENT_PATH = @"c:\";
         private List<HFS.HttpServer.File> files = new List<HFS.HttpServer.File>();
         private HttpServer.HttpServer server;
@@ -24,6 +27,17 @@ namespace HFS
         {
             InitializeComponent();
 
+            // settings
+            bs.DataSource = configs;
+
+            cboxSetting.DataSource = bs.DataSource;
+
+            cboxSetting.DisplayMember = "Name";
+            cboxSetting.ValueMember = "Name";
+
+            cboxSetting.Enabled = false;
+            //
+
             idCounter = 0;
 
             server = new HttpServer.HttpServer();
@@ -34,11 +48,28 @@ namespace HFS
             server.ResponseEncoding = HttpServer.HttpServer.Encoding.GZip;
             server.Root = "static/";
 
-            thread = new Thread(server.Start);
-            thread.Start();
+            startServer();
 
             LoadFiles(CURRENT_PATH);
             tbPath.Text = CURRENT_PATH;
+        }
+
+        private void startServer()
+        {
+            if (!server.Running)
+            {
+                thread = new Thread(server.Start);
+                thread.Start();
+            }
+        }
+
+        private void stopServer()
+        {
+            if (server.Running)
+            {
+                server.Stop();
+                thread.Abort();
+            }
         }
 
         private void LoadFiles(String path)
@@ -91,8 +122,7 @@ namespace HFS
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (server.Running)
-                server.Stop();
+            stopServer();
 
             Application.Exit();
         }
@@ -139,12 +169,13 @@ namespace HFS
         {
             if (server.Running)
             {
-                server.Stop();
-                thread.Abort();
+                stopServer();
                 
                 this.toolStripSplitButton.Image = global::HFS.Properties.Resources.stop;
                 startServerToolStripMenuItem.Enabled = true;
                 stopServerToolStripMenuItem.Enabled = false;
+
+                cboxSetting.Enabled = true;
             }
         }
 
@@ -152,12 +183,13 @@ namespace HFS
         {
             if (!server.Running)
             {
-                thread = new Thread(server.Start);
-                thread.Start();
+                startServer();
 
                 this.toolStripSplitButton.Image = global::HFS.Properties.Resources.play;
                 startServerToolStripMenuItem.Enabled = false;
                 stopServerToolStripMenuItem.Enabled = true;
+
+                cboxSetting.Enabled = false;
             }
         }
 
@@ -227,8 +259,7 @@ namespace HFS
 
         private void MainWindow_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (server.Running)
-                server.Stop();
+            stopServer();
 
             Application.Exit();
         }
@@ -261,22 +292,75 @@ namespace HFS
 
         private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            SettingsWindow sw = new SettingsWindow(server.Port);
-            if (sw.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            {
-                if (!server.Running)
-                {
-                    server.Port = sw.Port;
-                }
-                else
-                    MessageBox.Show("Szerver futása közben nem lehet portot állítani!");
-            }
+            SettingsWindow sw = new SettingsWindow();
+
+            sw.ShowDialog();
+
+            configs = sw.configs;
+
+            bs.DataSource = configs;
+            cboxSetting.DataSource = bs.DataSource;
         }
 
         private void btGo_Click(object sender, EventArgs e)
         {
             String path = tbPath.Text;
             LoadFiles(path);
+        }
+
+        private void tboChatMessage_TextChanged(object sender, EventArgs e)
+        {
+            if (String.IsNullOrWhiteSpace(tboChatMessage.Text))
+                btnSend.Enabled = false;
+            else
+                btnSend.Enabled = true;
+        }
+
+        private void btnSend_Click(object sender, EventArgs e)
+        {
+            server.SendMessageToClients(tboChatMessage.Text);
+        }
+
+        private void cboxSetting_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (server != null)
+            {
+                if (server.Running)
+                {
+                    MessageBox.Show("Futó szerver beállitásait nem lehet módositani!", "Rendszerüzenet", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    return;
+                }
+
+                Config configItem = getConfigItem(cboxSetting.SelectedText);
+
+                server.Port = (ushort)configItem.Port;
+                server.AllowFileUpload = configItem.AllowUpload;
+                server.MaxClientNumber = configItem.MaxUsers;
+            }
+        }
+
+        private Config getConfigItem(String id)
+        {
+            List<Config> items = configs.Where(x => x.Name.Equals(cboxSetting.Text)).ToList();
+
+            if (items.Count > 0)
+                return items[0];
+
+            return null;
+        }
+
+        private Config getConfigItem(string p, out int i)
+        {
+            i = 0;
+            foreach (Config item in configs)
+            {
+                if (item.Name.Equals(p))
+                    return item;
+
+                i++;
+            }
+
+            return null;
         }
     }
 }

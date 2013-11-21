@@ -559,5 +559,14 @@ namespace HFS.HttpServer
 
             return bs;
         }
+
+        public void SendMessageToClients(string p)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool AllowFileUpload { get; set; }
+
+        public int MaxClientNumber { get; set; }
     }
 }
