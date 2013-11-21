@@ -27,6 +27,10 @@ namespace HFS
         {
             InitializeComponent();
 
+            Logger.LogControl = lvLog;
+            Logger.LogDestination = LoggingDestination.LogToAll;
+            Logger.LogFileName = "hfs";
+
             // settings
             bs.DataSource = configs;
 

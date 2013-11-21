@@ -36,7 +36,6 @@
             this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.logBox = new System.Windows.Forms.RichTextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.chatBox = new System.Windows.Forms.RichTextBox();
             this.tboChatMessage = new System.Windows.Forms.TextBox();
@@ -53,14 +52,15 @@
             this.label2 = new System.Windows.Forms.Label();
             this.tvLocal = new System.Windows.Forms.TreeView();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.toolStripSplitButton = new System.Windows.Forms.ToolStripSplitButton();
-            this.startServerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.stopServerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.epTag = new System.Windows.Forms.ErrorProvider(this.components);
             this.label4 = new System.Windows.Forms.Label();
             this.cboxSetting = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
             this.lServer = new System.Windows.Forms.Label();
+            this.lvLog = new System.Windows.Forms.ListView();
+            this.toolStripSplitButton = new System.Windows.Forms.ToolStripSplitButton();
+            this.startServerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.stopServerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -141,20 +141,6 @@
             this.splitContainer1.Size = new System.Drawing.Size(582, 309);
             this.splitContainer1.SplitterDistance = 292;
             this.splitContainer1.TabIndex = 2;
-            // 
-            // logBox
-            // 
-            this.logBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.logBox.BackColor = System.Drawing.Color.White;
-            this.logBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.logBox.Enabled = false;
-            this.logBox.Location = new System.Drawing.Point(5, 353);
-            this.logBox.Name = "logBox";
-            this.logBox.ReadOnly = true;
-            this.logBox.Size = new System.Drawing.Size(573, 61);
-            this.logBox.TabIndex = 15;
-            this.logBox.Text = "";
             // 
             // label3
             // 
@@ -335,35 +321,6 @@
             this.statusStrip1.TabIndex = 3;
             this.statusStrip1.Text = "statusStrip1";
             // 
-            // toolStripSplitButton
-            // 
-            this.toolStripSplitButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripSplitButton.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.startServerToolStripMenuItem,
-            this.stopServerToolStripMenuItem});
-            this.toolStripSplitButton.Image = global::HFS.Properties.Resources.play;
-            this.toolStripSplitButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripSplitButton.Name = "toolStripSplitButton";
-            this.toolStripSplitButton.Size = new System.Drawing.Size(32, 20);
-            this.toolStripSplitButton.Text = "toolStripSplitButton1";
-            // 
-            // startServerToolStripMenuItem
-            // 
-            this.startServerToolStripMenuItem.Enabled = false;
-            this.startServerToolStripMenuItem.Image = global::HFS.Properties.Resources.play;
-            this.startServerToolStripMenuItem.Name = "startServerToolStripMenuItem";
-            this.startServerToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.startServerToolStripMenuItem.Text = "Start server";
-            this.startServerToolStripMenuItem.Click += new System.EventHandler(this.startServerToolStripMenuItem_Click);
-            // 
-            // stopServerToolStripMenuItem
-            // 
-            this.stopServerToolStripMenuItem.Image = global::HFS.Properties.Resources.stop;
-            this.stopServerToolStripMenuItem.Name = "stopServerToolStripMenuItem";
-            this.stopServerToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.stopServerToolStripMenuItem.Text = "Stop server";
-            this.stopServerToolStripMenuItem.Click += new System.EventHandler(this.stopServerToolStripMenuItem_Click);
-            // 
             // epTag
             // 
             this.epTag.ContainerControl = this;
@@ -407,16 +364,55 @@
             this.lServer.Size = new System.Drawing.Size(0, 13);
             this.lServer.TabIndex = 18;
             // 
+            // lvLog
+            // 
+            this.lvLog.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.lvLog.Location = new System.Drawing.Point(1, 353);
+            this.lvLog.Name = "lvLog";
+            this.lvLog.Size = new System.Drawing.Size(578, 67);
+            this.lvLog.TabIndex = 19;
+            this.lvLog.UseCompatibleStateImageBehavior = false;
+            // 
+            // toolStripSplitButton
+            // 
+            this.toolStripSplitButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripSplitButton.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.startServerToolStripMenuItem,
+            this.stopServerToolStripMenuItem});
+            this.toolStripSplitButton.Image = global::HFS.Properties.Resources.play;
+            this.toolStripSplitButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripSplitButton.Name = "toolStripSplitButton";
+            this.toolStripSplitButton.Size = new System.Drawing.Size(32, 20);
+            this.toolStripSplitButton.Text = "toolStripSplitButton1";
+            // 
+            // startServerToolStripMenuItem
+            // 
+            this.startServerToolStripMenuItem.Enabled = false;
+            this.startServerToolStripMenuItem.Image = global::HFS.Properties.Resources.play;
+            this.startServerToolStripMenuItem.Name = "startServerToolStripMenuItem";
+            this.startServerToolStripMenuItem.Size = new System.Drawing.Size(132, 22);
+            this.startServerToolStripMenuItem.Text = "Start server";
+            this.startServerToolStripMenuItem.Click += new System.EventHandler(this.startServerToolStripMenuItem_Click);
+            // 
+            // stopServerToolStripMenuItem
+            // 
+            this.stopServerToolStripMenuItem.Image = global::HFS.Properties.Resources.stop;
+            this.stopServerToolStripMenuItem.Name = "stopServerToolStripMenuItem";
+            this.stopServerToolStripMenuItem.Size = new System.Drawing.Size(132, 22);
+            this.stopServerToolStripMenuItem.Text = "Stop server";
+            this.stopServerToolStripMenuItem.Click += new System.EventHandler(this.stopServerToolStripMenuItem_Click);
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(582, 439);
+            this.Controls.Add(this.lvLog);
             this.Controls.Add(this.lServer);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.cboxSetting);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.logBox);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.menuStrip1);
@@ -468,11 +464,11 @@
         private System.Windows.Forms.RichTextBox chatBox;
         private System.Windows.Forms.TextBox tboChatMessage;
         private System.Windows.Forms.Button btnSend;
-        private System.Windows.Forms.RichTextBox logBox;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.ComboBox cboxSetting;
         private System.Windows.Forms.Label lServer;
+        private System.Windows.Forms.ListView lvLog;
     }
 }
 

@@ -27,7 +27,7 @@ namespace HFS
             {
                 strings = File.ReadAllLines("settings.hfs");
             }
-            catch (Exception e)
+            catch (Exception)
             {
             }
 
@@ -77,7 +77,7 @@ namespace HFS
             {
                 File.WriteAllLines("settings.hfs", strings);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return false;
             }

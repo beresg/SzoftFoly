@@ -562,7 +562,14 @@ namespace HFS.HttpServer
 
         public void SendMessageToClients(string p)
         {
-            throw new NotImplementedException();
+            try
+            {
+                throw new NotImplementedException();
+            }
+            catch (Exception e)
+            {
+                e.LogError();
+            }
         }
 
         public bool AllowFileUpload { get; set; }
