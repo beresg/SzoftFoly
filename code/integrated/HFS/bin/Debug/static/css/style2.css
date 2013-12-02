@@ -332,6 +332,24 @@ ul#navlist {
     width: 300px;
 }
 
+#chatBoxMessages {
+    text-align: left;
+    display: block;
+    background-color: white;
+    position: absolute;
+    top: 5px;
+    bottom: 30px;
+    left: 5px;
+    right: 5px;
+}
+
+#chatBoxInput {
+    display: block;
+    position: absolute;
+    bottom: 5px;
+    left: 5px;
+ 
+
 img {
      padding: 0px;
      border: 0px;
