@@ -1,7 +1,7 @@
 (function ($) {
 
 	$("#header").click(function(){
-		currTagCombination = { type: "AND", elems: [] };
+		utils.currTagCombination = { type: "AND", elems: [] };
 		utils.refreshFiles();
 		utils.refreshCTC();
 	});
@@ -69,10 +69,7 @@
 	
     $( "#chatBoxInput" ).keypress(function( event ) {
         if(event.which == 13) { // enter is pressed
-            $.post({
-                url: "/SendChatMsg",
-                data: { text: $(this).val() }
-            });
+			$.post( "/SendChatMsg", { text: $(this).val() } );
             $(this).val("");
         }
     });

@@ -14,15 +14,16 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
+		{pattern: 'tests/fixtures/*.html', watched: true, included: false, served: true},
 		'ext/jquery-1.9.1.js',
 		'ext/jquery-ui-1.10.2.custom.js',
+		'ext/jasmine-jquery.js',
 		'js/utils.js',
 		'js/events.js',
 		'tests/unit/*Spec.js'
 	],
 	preprocessors: {
-		'js/utils.js': ['coverage'],
-		'js/events.js': ['coverage']
+		'js/utils.js': ['coverage']
 	},
 
     // list of files to exclude

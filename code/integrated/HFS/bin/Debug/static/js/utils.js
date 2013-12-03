@@ -30,21 +30,21 @@
 	runDaemon();
 	
 	function addToCtc(type,tag) {
-		if (currTagCombination.elems.length == 0) {
-			// ALL OR sth = ALL, NONE AND sth = NONE
-			if (type != currTagCombination.type) return; 
-			// ALL AND sth = sth, NONE OR sth = sth
-			else currTagCombination = { type: type, elems: [tag] };
-		} else if (currTagCombination.type == type) {
-			// sth AND sth = sth, sth OR sth = sth
-			if ($.inArray(tag, currTagCombination.elems) >= 0) return;
-			currTagCombination.elems.push(tag);
-		} else {
-			currTagCombination = {type:type, elems:[currTagCombination, tag]};
-		}
-		refreshFiles();
-		refreshCTC();
-	}
+        if (currTagCombination.elems.length == 0) {
+            // ALL OR sth = ALL, NONE AND sth = NONE
+            if (type != currTagCombination.type) return; 
+            // ALL AND sth = sth, NONE OR sth = sth
+            else currTagCombination = { type: type, elems: [tag] };
+        } else if (currTagCombination.type == type) {
+            // sth AND sth = sth, sth OR sth = sth
+            if ($.inArray(tag, currTagCombination.elems) >= 0) return;
+            currTagCombination.elems.push(tag);
+        } else {
+            currTagCombination = {type:type, elems:[currTagCombination, tag]};
+        }
+        refreshFiles();
+        refreshCTC();
+    }
 	
 	function refreshFiles() {
         var matchingFiles = [];
@@ -142,6 +142,7 @@
     }
 	
 	return {
+		currTagCombination: currTagCombination,
 		addToCtc: addToCtc,
 		runDaemon: runDaemon,
 		refreshFiles: refreshFiles,
