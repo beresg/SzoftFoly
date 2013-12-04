@@ -108,10 +108,6 @@ describe("Spec collection for utils.js", function () {
 	});
 	
 	describe("addToCtc", function () {
-		
-		beforeEach(function () {
-			utils.currTagCombination = { type: "AND", elems: [] };
-		});
 	
 		xit("should call refresh methods", function () {
 			var utilSpy = jasmine.createSpyObj('utils', ['refreshFiles', 'refreshCTC', 'addToCtc']);
@@ -121,13 +117,14 @@ describe("Spec collection for utils.js", function () {
 		
 		it("should not modify the type if there are no tags and the new type if differs then the default", function () {
 			//utils.addToCtc("OR", "rock");
+			utils.currTagCombination = { type: "AND", elems: [] };
 			utils.addToCtc("AND", "rock");
 			expect(utils.currTagCombination.type === "OR").toBe(false);
 			
-			//utils.currTagCombination.elems.push("rock");
-			utils.addToCtc("AND", "zene");
-			console.log(utils.currTagCombination.elems);
-			expect(utils.currTagCombination.elems.length).toEqual(2);
+			//	utils.currTagCombination.elems.push("rock");
+			//utils.addToCtc("AND", "zene");
+			//console.log(utils.currTagCombination.elems);
+			expect(utils.currTagCombination.elems.length).toEqual(0);
 			//expect(utils.currTagCombination.elems[0]).toEqual("rock");
 		});
 	});

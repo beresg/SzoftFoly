@@ -32,12 +32,19 @@
 	function addToCtc(type,tag) {
         if (currTagCombination.elems.length == 0) {
             // ALL OR sth = ALL, NONE AND sth = NONE
-            if (type != currTagCombination.type) return; 
+            if (type != currTagCombination.type) {
+				return; 
+			}
             // ALL AND sth = sth, NONE OR sth = sth
-            else currTagCombination = { type: type, elems: [tag] };
-        } else if (currTagCombination.type == type) {
+            else {
+				currTagCombination = { type: type, elems: [tag] };
+			}
+        } 
+		else if (currTagCombination.type == type) {
             // sth AND sth = sth, sth OR sth = sth
-            if ($.inArray(tag, currTagCombination.elems) >= 0) return;
+            if ($.inArray(tag, currTagCombination.elems) >= 0) {
+				return;
+			}
             currTagCombination.elems.push(tag);
         } else {
             currTagCombination = {type:type, elems:[currTagCombination, tag]};
